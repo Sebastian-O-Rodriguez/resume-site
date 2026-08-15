@@ -52,7 +52,7 @@
    - Option A: Supabase CLI
      ```bash
      supabase link --project-ref <ref>
-     supabase migration up
+     supabase db push
      ```
    - Option B: SQL Editor in Supabase Dashboard
      - Open `supabase/migrations/001_analytics_events.sql` and paste + run

@@ -29,7 +29,7 @@ serve(async (req: Request) => {
   }
 
   const supabaseUrl = Deno.env.get('SUPABASE_URL');
-  const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
+  const supabaseKey = Deno.env.get('SUPABASE_ANON_KEY');
   if (!supabaseUrl || !supabaseKey) {
     return new Response('Server configuration error', { status: 500 });
   }

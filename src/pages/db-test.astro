@@ -1,0 +1,39 @@
+---
+// Connection test — "get connected" from Supabase docs.
+// Served at /db-test. Kept off the home page; safe to delete once verified.
+import { supabase } from '../db/supabase';
+import Layout from '../layouts/Layout.astro';
+
+let rows: { name: string }[] | null = null;
+let error: string | null = null;
+
+if (!supabase) {
+  error = 'Supabase env vars not configured (PUBLIC_SUPABASE_URL / PUBLIC_SUPABASE_ANON_KEY).';
+} else {
+  try {
+    const { data, error: err } = await supabase.from('todos').select('*');
+    rows = data;
+    error = err ? err.message : null;
+  } catch (e) {
+    error = e instanceof Error ? e.message : String(e);
+  }
+}
+---
+
+<Layout title="DB Test">
+  <h1 class="text-2xl font-semibold mb-4">Supabase connection test</h1>
+
+  {error && <p class="text-red-600 mb-4">Query failed: {error}</p>}
+
+  {!error && rows && rows.length === 0 && (
+    <p class="text-muted-foreground">Connected. The todos table is empty.</p>
+  )}
+
+  {!error && rows && rows.length > 0 && (
+    <ul class="list-disc pl-5 mb-4">
+      {rows.map((entry) => (
+        <li>{entry.name}</li>
+      ))}
+    </ul>
+  )}
+</Layout>
