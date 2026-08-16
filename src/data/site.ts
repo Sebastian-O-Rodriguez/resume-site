@@ -29,13 +29,13 @@ export interface SiteConfig {
 export const site: SiteConfig = {
   name: 'Sebastian O Rodriguez',
   education: 'Carnegie Mellon University · BS Technology & Sonic Product Innovation, Minor Business Administration (2020)',
-  photoPath: '/placeholder.svg',
+  photoPath: '/profile.svg',
   blurb: `Full-stack engineer building production AI systems end-to-end — LLM integration, golden-set evals, per-call observability, retrieval-augmented generation, and bounded agentic tool loops on typed actions. Strong security and testing discipline: multi-layer RLS, fail-closed auth, 80%+ coverage gates, real-model eval harnesses. TypeScript/React/Node primary with Python backend across FastAPI, SQLAlchemy, and Polars.
 
 Founder of Guava AI, where I built the full stack: the agent orchestration platform (guava-os), the client BI product (guavabi), and the company's web presence. Previously led strategic data operations at Scale AI and guided a product launch as a technical writer at Salesforce.`,
   workLately: `Building and operating the entire Guava AI product stack: agent orchestration platform for autonomous engineering workflows (guava-os), BI analytics for distributor operations (guavabi), and client-facing dashboards. Working directly with clients to scope requirements, conduct diagnostics, deliver reports, and run interviews. Recent deep work on deterministic analytics engines with LLM trust boundaries, agent governance patterns, and real-model eval harnesses.`,
   links: [
-    { label: 'Resume', href: '/resume.md' },
+    { label: 'Resume', href: '/resume.pdf' },
     { label: 'LinkedIn', href: 'https://linkedin.com/in/sebastianorodriguez' },
     { label: 'GitHub', href: 'https://github.com/Sebastian-O-Rodriguez' },
     { label: 'Web', href: 'https://guavaai.ai' },
