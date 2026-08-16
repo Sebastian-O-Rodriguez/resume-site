@@ -10,7 +10,7 @@ export interface Props {
 }
 
 const { title = 'Sebastian' } = Astro.props;
-const { name, education, photoPath, links } = site;
+const { name, links } = site;
 ---
 
 <!doctype html>
@@ -36,25 +36,43 @@ const { name, education, photoPath, links } = site;
       import '../lib/analytics';
     </script>
 
-    <!-- Header = identity zone: photo + name/education left, nav buttons right -->
+    <script>
+      import { gsap } from 'gsap';
+      import { ScrollTrigger } from 'gsap/ScrollTrigger';
+      gsap.registerPlugin(ScrollTrigger);
+
+      // Scroll reveals — skip entirely under reduced motion so content stays visible naturally.
+      if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        gsap.context(() => {
+          gsap.utils.toArray('[data-reveal]').forEach((el) => {
+            gsap.from(el, {
+              y: 24,
+              opacity: 0,
+              duration: 0.7,
+              ease: 'power2.out',
+              scrollTrigger: { trigger: el, start: 'top 85%', once: true },
+            });
+          });
+          gsap.from('.projects-grid > *', {
+            y: 24,
+            opacity: 0,
+            duration: 0.6,
+            ease: 'power2.out',
+            stagger: 0.08,
+            scrollTrigger: { trigger: '.projects-grid', start: 'top 80%', once: true },
+          });
+        });
+        window.addEventListener('load', () => ScrollTrigger.refresh());
+      }
+    </script>
+
+    <!-- Header = wordmark left, nav buttons + theme toggle right -->
     <header class="border-b border-border">
       <Container>
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 py-5">
-          <div class="flex items-center gap-4 min-w-0">
-            <img
-              src={photoPath}
-              alt="Profile photo of {name}"
-              width="64"
-              height="64"
-              class="shrink-0 rounded-full object-cover border border-border"
-            />
-            <div class="min-w-0">
-              <h1 class="text-lg md:text-xl font-serif font-semibold leading-tight truncate">{name}</h1>
-              <p class="text-xs md:text-sm text-muted-foreground leading-snug line-clamp-2">{education}</p>
-            </div>
-          </div>
+        <div class="flex items-center justify-between gap-4 py-4">
+          <a href="/" class="font-serif text-lg font-semibold shrink-0 hover:opacity-80">{name}</a>
 
-          <nav aria-label="Social links" class="flex flex-wrap items-center gap-2 sm:justify-end">
+          <nav aria-label="Social links" class="flex flex-wrap items-center gap-2 justify-end">
             {links.map((link) => (
               <Button
                 href={link.href}
