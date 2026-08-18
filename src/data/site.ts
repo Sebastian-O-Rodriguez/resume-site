@@ -31,7 +31,7 @@ export const site: SiteConfig = {
   education: 'Carnegie Mellon University · BS Technology & Sonic Product Innovation, Minor Business Administration (2020)',
   photoPath: '/profile.svg',
   tagline: 'my projects, research, and lollygags in one place',
-  blurb: `Full-stack engineer shipping production AI systems end-to-end — evals, RAG, and bounded agentic loops, with strict security and testing discipline. Founder of Guava AI; previously Scale AI and Salesforce.`,
+  blurb: `Full-stack engineer shipping production AI systems end-to-end: evals, RAG, and bounded agentic loops, with strict security and testing discipline. Founder of Guava AI; previously Scale AI and Salesforce.`,
   links: [
     { label: 'Resume', href: '/resume.pdf' },
     { label: 'LinkedIn', href: 'https://linkedin.com/in/sebastianorodriguez' },
@@ -41,19 +41,19 @@ export const site: SiteConfig = {
   projects: [
     {
       title: 'guava-os',
-      description: 'Agent orchestration platform — governed AI workflows via dependency graphs, worktree isolation, and review gates.',
+      description: 'Agent orchestration platform: governed AI workflows via dependency graphs, worktree isolation, and review gates.',
       stack: ['TypeScript', 'Linear GraphQL', 'OMP', 'OTel', 'Sentry'],
       url: 'https://github.com/Sebastian-O-Rodriguez/guava-os',
     },
     {
       title: 'guavabi',
-      description: 'BI for ERP-heavy distributors — deterministic analytics with an LLM trust boundary.',
+      description: 'BI for ERP-heavy distributors: deterministic analytics with an LLM trust boundary.',
       stack: ['Python', 'FastAPI', 'Next.js', 'PostgreSQL', 'Polars', 'OpenRouter'],
       url: 'https://app.guavabi.com',
     },
     {
       title: 'routineme',
-      description: 'AI health tracker — RAG-grounded nutrition estimates, typed actions, real-model evals.',
+      description: 'AI health tracker: RAG-grounded nutrition estimates, typed actions, real-model evals.',
       stack: ['Expo', 'React Native', 'Supabase', 'OpenRouter', 'Zod'],
       url: 'https://github.com/Sebastian-O-Rodriguez/routineme',
     },

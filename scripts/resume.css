@@ -7,8 +7,8 @@
 
 body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 9pt;
-  line-height: 1.22;
+  font-size: 9.5pt;
+  line-height: 1.32;
   color: #111;
   margin: 0;
   max-width: none; /* pandoc template sets max-width:36em — clear for print */

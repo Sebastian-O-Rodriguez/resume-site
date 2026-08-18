@@ -1,10 +1,10 @@
 # Sebastian O Rodriguez
 
-sebastian@guavatt.com · github.com/Sebastian-O-Rodriguez · linkedin.com/in/sebastianorodriguez
+sebastian@guavaai.ai · github.com/Sebastian-O-Rodriguez · linkedin.com/in/sebastianorodriguez
 
 ## Summary
 
-Full-stack engineer shipping production AI systems end-to-end — LLM integration, golden-set evals, RAG, observability, and bounded agentic loops — with strict security (RLS) and testing discipline (80%+ coverage). Founder of Guava AI; previously Scale AI and Salesforce.
+Full-stack engineer shipping production AI systems end-to-end: LLM integration, golden-set evals, RAG with vector search, observability, and bounded agentic loops, under strict security (RLS) and testing discipline (80%+ coverage). Founder of Guava AI (agent orchestration + client BI); previously Scale AI and Salesforce.
 
 ## Technical Skills
 
@@ -12,35 +12,39 @@ Full-stack engineer shipping production AI systems end-to-end — LLM integratio
 
 **Frontend:** React, Next.js, Expo / React Native, Tailwind, shadcn/ui, Astro, Svelte
 
-**AI / LLM:** OpenRouter, LLM evals, RAG, agentic loops, observability, Supabase RLS
+**AI / LLM:** OpenRouter, LLM evals (LLM-as-judge, golden sets, regression floors), LangGraph, RAG + pgvector embeddings, MCP tool routing, agentic loops, Langfuse / LangSmith observability, Supabase RLS, Claude Code / Cursor
 
-**Backend / Infra:** Node, NestJS, FastAPI, PostgreSQL, Prisma, Azure, GitHub Actions
+**Backend / Infra:** Node, NestJS, FastAPI, SQLAlchemy, Pydantic, Polars, PostgreSQL, Prisma, Azure + AWS, Docker, Kubernetes, GitHub Actions
 
 ## Experience
 
-**Guava AI — Founder & Full-Stack Engineer** <span class="dates">2025–Present · Remote</span>
+**Guava AI** · Founder & Full-Stack Engineer <span class="dates">2025–Present · Remote</span>
 
-- Ship the full Guava AI product stack: agent orchestration (guava-os) with governed execution via dependency graphs, worktree isolation, and review gates (258 tests); client BI analytics (guavabi) with a deterministic engine behind an LLM trust boundary (514 tests).
-- Build client-facing dashboards and automations; scope requirements, run diagnostics, and deliver reports directly with clients. TypeScript, Python, FastAPI, Next.js, PostgreSQL.
+- Ship the full Guava AI product stack: agent orchestration (guava-os) via dependency-graph governed execution, worktree isolation, MCP tool routing, review gates, and an eval harness with golden sets + LLM-as-judge (258 tests); client BI analytics (guavabi) with a deterministic engine behind an LLM trust boundary (514 tests).
+- Own the build through delivery: scope requirements, run diagnostics, and ship client dashboards and automations in TypeScript, Python, FastAPI, Next.js, and PostgreSQL; set the coverage and eval-release bar for the team.
 
-**Scale AI — Strategic Projects** <span class="dates">2022–2024 · Remote</span>
+**Scale AI** · Strategic Projects <span class="dates">2022–2024 · Remote</span>
 
-- Led text/multimodal data-labeling operations: took queue quality 25% → 75% in 4 days, scaled daily production 250 → 25,000+, and built an onboarding funnel producing 250+ qualified hires; managed 50+ operators.
+- Led text and multimodal data-labeling operations: raised queue quality 25% → 75% in 4 days, scaled daily production 250 → 25,000+, and built an onboarding funnel producing 250+ qualified hires while managing 50+ operators.
 
-**Salesforce — Technical Writer** <span class="dates">2020–2022 · Remote</span>
+**Salesforce** · Technical Writer <span class="dates">2020–2022 · Remote</span>
 
-- Launched an elastic services product with a 3-person team; owned product + API reference documentation and internal knowledge base.
+- Launched an elastic services product with a 3-person team; owned product and API reference documentation plus the internal knowledge base.
 
 ## Projects
 
-**RoutineMe — AI health tracker** <span class="dates">2025</span>
+**guava-os** · Agent orchestration platform
+- Governed AI-agent execution end-to-end: dependency-graph orchestration, isolated worktrees, MCP tool routing, human review gates; golden-set evals with LLM-as-judge. TypeScript.
 
-- AI health tracker: LLM classifier → RAG-grounded nutrition estimator → typed action executor. Golden-set evals hit 100% on a live OpenRouter run; per-call AI observability; bounded 3-step agentic loop; RLS. Expo, Supabase, OpenRouter.
+**guavabi** · Multi-tenant analytics (BI)
+- Deterministic analytics engine behind an LLM trust boundary; converts LLM-constructed queries into deterministic, auditable outputs across tenant-isolated dashboards.
 
-**PMLaD — Multi-tenant property SaaS** <span class="dates">2024–2025</span>
+**RoutineMe** · AI health tracker
+- LLM classifier → RAG-grounded nutrition estimator → typed action executor; golden-set evals at 100% on a live OpenRouter run; per-call AI observability; bounded 3-step agentic loop; RLS. Expo, Supabase, OpenRouter.
 
-- Multi-tenant property platform with 4-layer RLS tenant isolation (FORCE RLS, boot-time verification) and staged Azure CD gated on 80%+ coverage and Playwright E2E. Next.js, NestJS, Prisma, PG16, Azure.
+**PMLaD** · Multi-tenant property SaaS
+- 4-layer RLS tenant isolation (FORCE RLS, boot-time verification); staged Azure CD gated on 80%+ coverage and Playwright E2E. Next.js, NestJS, Prisma, PG16, Azure.
 
 ## Education
 
-**Carnegie Mellon University** — BS Technology &amp; Sonic Product Innovation, Minor Business Administration <span class="dates">2020</span>
+**Carnegie Mellon University** · BS Technology & Sonic Product Innovation, Minor Business Administration <span class="dates">2020</span>
