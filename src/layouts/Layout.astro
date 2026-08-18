@@ -51,6 +51,7 @@ const { name, links } = site;
               duration: 0.7,
               ease: 'power2.out',
               scrollTrigger: { trigger: el, start: 'top 85%', once: true },
+              onComplete: () => gsap.set(el, { clearProps: 'transform' }),
             });
           });
           gsap.from('.projects-grid > *', {
@@ -60,6 +61,7 @@ const { name, links } = site;
             ease: 'power2.out',
             stagger: 0.08,
             scrollTrigger: { trigger: '.projects-grid', start: 'top 80%', once: true },
+            onComplete: () => gsap.set('.projects-grid > *', { clearProps: 'transform' }),
           });
         });
         window.addEventListener('load', () => ScrollTrigger.refresh());

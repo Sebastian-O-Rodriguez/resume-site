@@ -14,6 +14,27 @@
 @theme default {
   --font-sans: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
   --font-serif: "Source Serif 4 Variable", ui-serif, Georgia, serif;
+  /* Card shadows — tint #5C482D (hsl(34 34% 27%)) with alpha */
+  --shadow-inset: inset 0 1px 2px rgb(92 72 45 / 0.22), inset 0 2px 8px rgb(92 72 45 / 0.12);
+  --shadow-raised: 0 4px 8px rgb(92 72 45 / 0.18), 0 10px 24px rgb(92 72 45 / 0.22);
+}
+
+/* --- Map design tokens to Tailwind color utilities (shadcn v4 pattern) --- */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-border: var(--border);
+  --color-ring: var(--ring);
 }
 
 /* --- Dark mode variant (class-based) --- */
@@ -21,50 +42,54 @@
 
 /* --- Light / Dark tokens --- */
 :root {
-  --background: 0 0% 100%;
-  --foreground: 222.2 84% 4.9%;
-  --card: 0 0% 100%;
-  --card-foreground: 222.2 84% 4.9%;
-  --primary: 222.2 47.4% 11.2%;
-  --primary-foreground: 210 40% 98%;
-  --secondary: 210 40% 96.1%;
-  --secondary-foreground: 222.2 47.4% 11.2%;
-  --muted: 210 40% 96.1%;
-  --muted-foreground: 215.4 16.3% 46.9%;
-  --accent: 210 40% 96.1%;
-  --accent-foreground: 222.2 47.4% 11.2%;
-  --border: 214.3 31.8% 91.4%;
+  --background: #FFFFFF;            /* pure white */
+  --foreground: #322418;            /* dark brown text */
+  --card: #F5F0E7;                  /* slightly darker than white */
+  --card-foreground: #322418;
+  --primary: #322418;               /* deep brown */
+  --primary-foreground: #FFFFFF;
+  --secondary: #F2ECE2;
+  --secondary-foreground: #322418;
+  --muted: #F2ECE2;
+  --muted-foreground: #6B5B48;
+  --accent: #F2ECE2;
+  --accent-foreground: #322418;
+  --border: #D8CDBB;
+  --ring: #5C482D;
+  --shadow-color: #5C482D;          /* shadow tint */
   --radius: 0.5rem;
 }
 
 .dark {
-  --background: 222.2 84% 4.9%;
-  --foreground: 210 40% 98%;
-  --card: 222.2 84% 4.9%;
-  --card-foreground: 210 40% 98%;
-  --primary: 210 40% 98%;
-  --primary-foreground: 222.2 47.4% 11.2%;
-  --secondary: 217.2 32.6% 17.5%;
-  --secondary-foreground: 210 40% 98%;
-  --muted: 217.2 32.6% 17.5%;
-  --muted-foreground: 215 20.2% 65.1%;
-  --accent: 217.2 32.6% 17.5%;
-  --accent-foreground: 210 40% 98%;
-  --border: 217.2 32.6% 17.5%;
+  --background: #322418;            /* earth brown */
+  --foreground: #FFFFFF;
+  --card: #3B2C1E;                  /* lighter than page */
+  --card-foreground: #FFFFFF;
+  --primary: #C9A87C;               /* warm tan */
+  --primary-foreground: #322418;
+  --secondary: #3B2B1D;
+  --secondary-foreground: #FFFFFF;
+  --muted: #3B2B1D;
+  --muted-foreground: #A89B89;
+  --accent: #4C3925;
+  --accent-foreground: #FFFFFF;
+  --border: #4C3925;
+  --ring: #C9A87C;
+  --shadow-color: #5C482D;
   color-scheme: dark;
 }
 
 /* --- Base styles --- */
 * {
-  border-color: hsl(var(--border));
+  border-color: var(--border);
 }
 
 body {
-  background-color: hsl(var(--background));
+  background-color: var(--background);
   /* Subtle self-hosted SVG grain texture (feTurbulence noise, license-free). */
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.2'/></svg>");
   background-size: 180px 180px;
-  color: hsl(var(--foreground));
+  color: var(--foreground);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -85,5 +110,9 @@ h1, h2, h3, h4 {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+  /* Card hover raise: shadow swaps, no movement */
+  .projects-grid > article {
+    transform: none !important;
   }
 }

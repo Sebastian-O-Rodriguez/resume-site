@@ -1,18 +1,22 @@
 ---
 import { site } from '../data/site';
 
-const { name, photoPath } = site;
+const { name, photoPath, tagline, blurb } = site;
 ---
 
-<section class="pt-10 md:pt-14 pb-4" aria-label="Identity">
-  <div class="flex flex-col items-center gap-5 text-center">
+<section class="pt-10 md:pt-14 pb-2" aria-label="Identity">
+  <div class="flex flex-col items-center gap-6 text-center md:flex-row md:items-center md:gap-8 md:text-left">
     <img
       src={photoPath}
       alt={`Profile photo of ${name}`}
       width="176"
       height="176"
-      class="h-44 w-44 rounded-full object-cover border border-border shadow-sm"
+      class="h-44 w-44 shrink-0 rounded-full object-cover border border-border shadow-sm"
     />
-    <h1 class="text-4xl md:text-5xl font-serif font-semibold leading-tight">{name}</h1>
+    <div class="min-w-0">
+      <h1 class="text-4xl md:text-5xl font-serif font-semibold leading-tight">{name}</h1>
+      <p class="mt-2 text-base md:text-lg text-muted-foreground">{tagline}</p>
+      <p class="mt-3 max-w-2xl text-sm md:text-base leading-relaxed text-foreground/90">{blurb}</p>
+    </div>
   </div>
 </section>
