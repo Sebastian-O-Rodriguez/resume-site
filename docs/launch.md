@@ -1,5 +1,16 @@
 # Launch Runbook — Resume Site v1
 
+## Domains / URLs (confirmed 2026-08)
+
+The site lives under **two distinct domains** — do not conflate them:
+
+| Domain | Purpose | Notes |
+|---|---|---|
+| **`sebastianr.dev`** | **THIS resume site** (canonical). Vercel is provisioning this as the production URL; custom-domain record (`A` → `76.76.21.21`, or CNAME per §1) and TLS auto-provision. | Use this whenever referencing the resume/site itself. |
+| **`guavaai.ai`** | **Company site** (my most recent role; many projects originated there). Separate deploy, separate content. | Header link in `src/data/site.ts` is labeled **"Guava AI (company)"** and points here — it is the company, not this site. |
+
+Canonical source of truth: `src/data/site.ts` (`links`) + this section.
+
 ## Prerequisites
 
 - [ ] GitHub repo: `Sebastian-O-Rodriguez/resume-site.git` exists and is pushed

@@ -17,7 +17,10 @@ export interface Link {
 }
 
 export interface SiteConfig {
+  /** Full legal name — used for SEO title/meta, photo alt, footer, resume. */
   name: string;
+  /** Visible brand shown in the header wordmark + hero h1 (initials). */
+  brand: string;
   education: string;
   photoPath: string;
   tagline: string;
@@ -28,6 +31,7 @@ export interface SiteConfig {
 
 export const site: SiteConfig = {
   name: 'Sebastian O Rodriguez',
+  brand: 'SOR',
   education: 'Carnegie Mellon University · BS Technology & Sonic Product Innovation, Minor Business Administration (2020)',
   photoPath: '/profile.svg',
   tagline: 'my projects, research, and lollygags in one place',
@@ -36,7 +40,7 @@ export const site: SiteConfig = {
     { label: 'Resume', href: '/resume.pdf' },
     { label: 'LinkedIn', href: 'https://linkedin.com/in/sebastianorodriguez' },
     { label: 'GitHub', href: 'https://github.com/Sebastian-O-Rodriguez' },
-    { label: 'Web', href: 'https://guavaai.ai' },
+    { label: 'Guava AI (company)', href: 'https://guavaai.ai' },
   ],
   projects: [
     {
