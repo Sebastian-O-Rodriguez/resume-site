@@ -4,6 +4,7 @@ import Container from '../components/Container.astro';
 import ThemeToggle from '../components/ThemeToggle.astro';
 import Button from '../components/Button.astro';
 import { site } from '../data/site';
+import Analytics from '@vercel/analytics/astro';
 
 export interface Props {
   title?: string;
@@ -32,6 +33,7 @@ const { name, brand, links } = site;
     </script>
   </head>
   <body class="min-h-screen bg-background text-foreground font-sans antialiased">
+    <Analytics />
     <script>
       import '../lib/analytics';
     </script>
