@@ -7,7 +7,6 @@ export interface Project {
   title: string;
   description: string;
   stack: string[];
-  url?: string;
   draft?: boolean;
 }
 
@@ -47,31 +46,26 @@ export const site: SiteConfig = {
       title: 'guava-os',
       description: 'Agent orchestration platform: governed AI workflows via dependency graphs, worktree isolation, and review gates.',
       stack: ['TypeScript', 'Linear GraphQL', 'OMP', 'OTel', 'Sentry'],
-      url: 'https://github.com/Sebastian-O-Rodriguez/guava-os',
     },
     {
       title: 'guavabi',
       description: 'BI for ERP-heavy distributors: deterministic analytics with an LLM trust boundary.',
       stack: ['Python', 'FastAPI', 'Next.js', 'PostgreSQL', 'Polars', 'OpenRouter'],
-      url: 'https://app.guavabi.com',
     },
     {
       title: 'routineme',
       description: 'AI health tracker: RAG-grounded nutrition estimates, typed actions, real-model evals.',
       stack: ['Expo', 'React Native', 'Supabase', 'OpenRouter', 'Zod'],
-      url: 'https://github.com/Sebastian-O-Rodriguez/routineme',
     },
     {
       title: 'PMLaD',
       description: 'Multi-tenant property platform with four-layer RLS tenant isolation and gated Azure CD.',
       stack: ['Next.js', 'NestJS', 'Prisma', 'PostgreSQL 16', 'Azure', 'Clerk'],
-      url: 'https://github.com/Sebastian-O-Rodriguez/pmlad',
     },
     {
       title: 'guava-site',
       description: 'Company site on Cloudflare Pages with automated Playwright QA.',
       stack: ['Astro', 'Svelte', 'Tailwind CSS', 'Cloudflare', 'Playwright'],
-      url: 'https://guavaai.ai',
     },
   ],
 };
