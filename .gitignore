@@ -16,8 +16,6 @@ pnpm-debug.log*
 # Environment variables
 .env
 .env.*
-.env.production
-!.env.example
 
 # guava-os ephemeral manifest
 .guava-os/manifest.json
