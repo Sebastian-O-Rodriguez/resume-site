@@ -1,13 +1,31 @@
 ---
 export interface Props {
+  href?: string;
+  cta?: string;
   class?: string;
 }
 
-const { class: className = '' } = Astro.props;
+const { href, cta, class: className = '' } = Astro.props;
 ---
 
 <article
-  class="rounded-xl border border-border bg-card text-card-foreground shadow-inset transition-[transform,box-shadow] duration-200 hover:[transform:translateY(-2px)] hover:shadow-raised {className}"
+  class:list={[
+    'rounded-xl border border-border bg-card text-card-foreground shadow-inset transition-[transform,box-shadow] duration-200 hover:[transform:translateY(-2px)] hover:shadow-raised flex flex-col h-full',
+    className,
+  ]}
 >
-  <slot />
+  <div class="flex flex-1 flex-col p-5">
+    <slot />
+  </div>
+  {
+    href && (
+      <a
+        href={href}
+        class="mt-auto flex items-center justify-between gap-2 border-t border-border px-5 py-3 text-sm font-medium text-primary transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset"
+      >
+        <span>{cta || 'Read more'}</span>
+        <span aria-hidden="true">→</span>
+      </a>
+    )
+  }
 </article>

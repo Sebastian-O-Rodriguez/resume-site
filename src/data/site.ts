@@ -7,6 +7,10 @@ export interface Project {
   title: string;
   description: string;
   stack: string[];
+  /** Case-study / evidence link (primary CTA). Omitted for non-clickable secondary cards. */
+  href?: string;
+  /** CTA label rendered when href is set. */
+  cta?: string;
   draft?: boolean;
 }
 
@@ -33,29 +37,32 @@ export const site: SiteConfig = {
   brand: 'SOR',
   education: 'Carnegie Mellon University · BS Technology & Sonic Product Innovation, Minor Business Administration (2020)',
   photoPath: '/profile.svg',
-  tagline: 'my projects, research, and lollygags in one place',
-  blurb: `Full-stack engineer shipping production AI systems end-to-end: evals, RAG, and bounded agentic loops, with strict security and testing discipline. Founder of Guava AI; previously Scale AI and Salesforce.`,
+  tagline: 'I build reliable AI systems close to the code — evaluated, guarded, and shipped end-to-end.',
+  blurb: `Applied AI engineer building reliable LLM systems close to the code: golden-set evals with regression floors, user-grounded RAG, bounded agent workflows, and per-call observability, with strict security and testing discipline. Founder of Guava AI; previously Scale AI and Salesforce.`,
   links: [
     { label: 'Resume', href: '/resume.pdf' },
     { label: 'LinkedIn', href: 'https://linkedin.com/in/sebastianorodriguez' },
     { label: 'GitHub', href: 'https://github.com/Sebastian-O-Rodriguez' },
-    { label: 'Guava AI (company)', href: 'https://guavaai.ai' },
   ],
   projects: [
     {
-      title: 'guava-os',
-      description: 'Agent orchestration platform: governed AI workflows via dependency graphs, worktree isolation, and review gates.',
-      stack: ['TypeScript', 'Linear GraphQL', 'OMP', 'OTel', 'Sentry'],
-    },
-    {
-      title: 'guavabi',
-      description: 'BI for ERP-heavy distributors: deterministic analytics with an LLM trust boundary.',
+      title: 'Guava BI',
+      description: 'Deterministic analytics for ERP-heavy distributors behind an LLM trust boundary — AI proposes, never computes.',
       stack: ['Python', 'FastAPI', 'Next.js', 'PostgreSQL', 'Polars', 'OpenRouter'],
+      href: '/case-studies/guava-bi',
+      cta: 'Read the case study',
     },
     {
-      title: 'routineme',
-      description: 'AI health tracker: RAG-grounded nutrition estimates, typed actions, real-model evals.',
+      title: 'RoutineMe',
+      description: 'Production AI health tracker: user-grounded RAG nutrition estimates, typed actions, and real-model evals.',
       stack: ['Expo', 'React Native', 'Supabase', 'OpenRouter', 'Zod'],
+      href: '/case-studies/routineme',
+      cta: 'Read the case study',
+    },
+    {
+      title: 'guava-os',
+      description: 'Control plane for parallel AI coding agents: dependency graphs, worktree isolation, and review gates.',
+      stack: ['TypeScript', 'Linear GraphQL', 'OMP'],
     },
     {
       title: 'PMLaD',

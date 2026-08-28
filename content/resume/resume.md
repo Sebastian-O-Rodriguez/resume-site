@@ -1,10 +1,10 @@
 # Sebastian O Rodriguez
 
-sebastian@guavaai.ai · github.com/Sebastian-O-Rodriguez · linkedin.com/in/sebastianorodriguez
+sebastian@guavatt.com · github.com/Sebastian-O-Rodriguez · linkedin.com/in/sebastianorodriguez
 
 ## Summary
 
-Full-stack engineer shipping production AI systems end-to-end: LLM integration, golden-set evals, RAG with vector search, observability, and bounded agentic loops, under strict security (RLS) and testing discipline (80%+ coverage). Founder of Guava AI (agent orchestration + client BI); previously Scale AI and Salesforce.
+AI Engineer building reliable AI systems close to the code — evaluated, guarded, and shipped end-to-end. Golden-set evals with regression floors, user-grounded RAG (frequency-rank, no vector DB), bounded agentic loops on a typed action boundary, and per-call observability, under strict security (RLS) and testing discipline (80%+ coverage). Founder of Guava AI (agent orchestration + client BI); previously Scale AI and Salesforce.
 
 ## Technical Skills
 
@@ -12,15 +12,15 @@ Full-stack engineer shipping production AI systems end-to-end: LLM integration, 
 
 **Frontend:** React, Next.js, Expo / React Native, Tailwind, shadcn/ui, Astro, Svelte
 
-**AI / LLM:** OpenRouter, LLM evals (LLM-as-judge, golden sets, regression floors), LangGraph, RAG + pgvector embeddings, MCP tool routing, agentic loops, Langfuse / LangSmith observability, Supabase RLS, Claude Code / Cursor
+**AI / LLM:** OpenRouter, golden-set evals with regression floors, user-grounded RAG (JSONB frequency-rank, no vector DB), bounded agentic loops, per-call observability, Supabase RLS, Claude Code / Cursor
 
-**Backend / Infra:** Node, NestJS, FastAPI, SQLAlchemy, Pydantic, Polars, PostgreSQL, Prisma, Azure + AWS, Docker, Kubernetes, GitHub Actions
+**Backend / Infra:** Node, NestJS, FastAPI, SQLAlchemy, Pydantic, Polars, PostgreSQL, Prisma, Azure, Docker, GitHub Actions
 
 ## Experience
 
-**Guava AI** · Founder & Full-Stack Engineer <span class="dates">2025–Present · Remote</span>
+**Guava AI** · Founder & AI Engineer <span class="dates">2025–Present · Remote</span>
 
-- Ship the full Guava AI product stack: agent orchestration (guava-os) via dependency-graph governed execution, worktree isolation, MCP tool routing, review gates, and an eval harness with golden sets + LLM-as-judge (258 tests); client BI analytics (guavabi) with a deterministic engine behind an LLM trust boundary (514 tests).
+- Ship the full Guava AI product stack: agent orchestration (guava-os) via dependency-graph governed execution, worktree isolation, review gates, and golden-set evals (233 tests); client BI analytics (Guava BI) with a deterministic engine behind an LLM trust boundary (723 tests).
 - Own the build through delivery: scope requirements, run diagnostics, and ship client dashboards and automations in TypeScript, Python, FastAPI, Next.js, and PostgreSQL; set the coverage and eval-release bar for the team.
 
 **Scale AI** · Strategic Projects <span class="dates">2022–2024 · Remote</span>
@@ -34,9 +34,9 @@ Full-stack engineer shipping production AI systems end-to-end: LLM integration, 
 ## Projects
 
 **guava-os** · Agent orchestration platform
-- Governed AI-agent execution end-to-end: dependency-graph orchestration, isolated worktrees, MCP tool routing, human review gates; golden-set evals with LLM-as-judge. TypeScript.
+- Governed AI-agent execution end-to-end: dependency-graph orchestration, isolated worktrees, human review gates, and golden-set evals. TypeScript.
 
-**guavabi** · Multi-tenant analytics (BI)
+**Guava BI** · Multi-tenant analytics (BI)
 - Deterministic analytics engine behind an LLM trust boundary; converts LLM-constructed queries into deterministic, auditable outputs across tenant-isolated dashboards.
 
 **RoutineMe** · AI health tracker
