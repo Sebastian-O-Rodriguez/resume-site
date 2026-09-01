@@ -1,11 +1,13 @@
 ---
 export interface Props {
-  href?: string;
-  cta?: string;
+  caseStudy?: {
+    status: 'published' | 'placeholder';
+    content: string;
+  };
   class?: string;
 }
 
-const { href, cta, class: className = '' } = Astro.props;
+const { caseStudy, class: className = '' } = Astro.props;
 ---
 
 <article
@@ -18,14 +20,71 @@ const { href, cta, class: className = '' } = Astro.props;
     <slot />
   </div>
   {
-    href && (
-      <a
-        href={href}
-        class="mt-auto flex items-center justify-between gap-2 border-t border-border px-5 py-3 text-sm font-medium text-primary transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset"
-      >
-        <span>{cta || 'Read more'}</span>
-        <span aria-hidden="true">→</span>
-      </a>
+    caseStudy && (
+      <div class="mt-auto border-t border-border" data-case-study>
+        <button
+          type="button"
+          data-case-study-toggle
+          aria-expanded="false"
+          class="flex w-full items-center justify-between gap-2 px-5 py-3 text-sm font-medium text-primary transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset"
+        >
+          <span>Read case study</span>
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 16 16"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            class="case-study-chevron h-4 w-4 shrink-0"
+          >
+            <path d="M4 6l4 4 4-4" />
+          </svg>
+        </button>
+        <div class="case-study-panel">
+          <div class="case-study-inner">
+            <div class="px-5 pb-5 text-sm leading-relaxed text-muted-foreground whitespace-pre-line">{caseStudy.content}</div>
+          </div>
+        </div>
+      </div>
     )
   }
 </article>
+
+<style>
+  .case-study-panel {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 200ms ease-out;
+  }
+  .is-open .case-study-panel {
+    grid-template-rows: 1fr;
+  }
+  .case-study-inner {
+    min-height: 0;
+    overflow: hidden;
+  }
+  .case-study-chevron {
+    transition: transform 200ms ease-out;
+  }
+  .is-open .case-study-chevron {
+    transform: rotate(180deg);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .case-study-panel,
+    .case-study-chevron {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  const toggles = document.querySelectorAll('[data-case-study-toggle]');
+  toggles.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const root = btn.closest('[data-case-study]');
+      const expanded = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!expanded));
+      root?.classList.toggle('is-open', !expanded);
+    });
+  });
+</script>

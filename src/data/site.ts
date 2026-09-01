@@ -11,6 +11,8 @@ export interface Project {
   href?: string;
   /** CTA label rendered when href is set. */
   cta?: string;
+  /** Inline case-study body expanded in place on the card. */
+  caseStudy?: { status: 'published' | 'placeholder'; content: string };
   draft?: boolean;
 }
 
