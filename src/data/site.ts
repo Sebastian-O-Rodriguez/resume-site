@@ -7,6 +7,8 @@ export interface Project {
   title: string;
   description: string;
   stack: string[];
+  /** Domain icon key — rendered before the card title (see Projects.astro). */
+  icon?: string;
   /** Case-study / evidence link (primary CTA). Omitted for non-clickable secondary cards. */
   href?: string;
   /** CTA label rendered when href is set. */
@@ -51,6 +53,7 @@ export const site: SiteConfig = {
       title: 'Guava BI',
       description: 'Deterministic analytics for ERP-heavy distributors behind an LLM trust boundary — AI proposes, never computes.',
       stack: ['Python', 'FastAPI', 'Next.js', 'PostgreSQL', 'Polars', 'OpenRouter'],
+      icon: 'analytics',
       href: '/case-studies/guava-bi',
       cta: 'Read the case study',
     },
@@ -58,6 +61,7 @@ export const site: SiteConfig = {
       title: 'RoutineMe',
       description: 'Production AI health tracker: user-grounded RAG nutrition estimates, typed actions, and real-model evals.',
       stack: ['Expo', 'React Native', 'Supabase', 'OpenRouter', 'Zod'],
+      icon: 'health',
       href: '/case-studies/routineme',
       cta: 'Read the case study',
     },
@@ -65,16 +69,19 @@ export const site: SiteConfig = {
       title: 'guava-os',
       description: 'Control plane for parallel AI coding agents: dependency graphs, worktree isolation, and review gates.',
       stack: ['TypeScript', 'Linear GraphQL', 'OMP'],
+      icon: 'terminal',
     },
     {
       title: 'PMLaD',
       description: 'Multi-tenant property platform with four-layer RLS tenant isolation and gated Azure CD.',
       stack: ['Next.js', 'NestJS', 'Prisma', 'PostgreSQL 16', 'Azure', 'Clerk'],
+      icon: 'building',
     },
     {
       title: 'guava-site',
       description: 'Company site on Cloudflare Pages with automated Playwright QA.',
       stack: ['Astro', 'Svelte', 'Tailwind CSS', 'Cloudflare', 'Playwright'],
+      icon: 'globe',
     },
   ],
 };

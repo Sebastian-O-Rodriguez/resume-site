@@ -12,10 +12,18 @@ const { caseStudy, class: className = '' } = Astro.props;
 
 <article
   class:list={[
-    'rounded-xl border border-border bg-card text-card-foreground shadow-inset transition-[transform,box-shadow] duration-200 hover:[transform:translateY(-2px)] hover:shadow-raised flex flex-col h-full',
+    'relative rounded-xl border border-border bg-card text-card-foreground shadow-inset transition-[transform,box-shadow] duration-200 hover:[transform:translateY(-2px)] hover:shadow-raised flex flex-col h-full',
     className,
   ]}
 >
+  {
+    caseStudy && (
+      <span
+        class:list={['case-status-dot', caseStudy.status]}
+        title={caseStudy.status === 'published' ? 'Case study available' : 'Case study pending'}
+      />
+    )
+  }
   <div class="flex flex-1 flex-col p-5">
     <slot />
   </div>
@@ -51,6 +59,22 @@ const { caseStudy, class: className = '' } = Astro.props;
 </article>
 
 <style>
+  .case-status-dot {
+    position: absolute;
+    top: 0.875rem;
+    right: 0.875rem;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 9999px;
+  }
+  .case-status-dot.published {
+    background-color: #16a34a;
+    box-shadow: 0 0 0 3px rgb(22 163 74 / 0.15), 0 0 10px rgb(22 163 74 / 0.55);
+  }
+  .case-status-dot.placeholder {
+    background-color: #eab308;
+    box-shadow: 0 0 0 3px rgb(234 179 8 / 0.15), 0 0 10px rgb(234 179 8 / 0.55);
+  }
   .case-study-panel {
     display: grid;
     grid-template-rows: 0fr;

@@ -7,6 +7,16 @@ import Badge from './Badge.astro';
 const { projects } = site;
 const active = projects.filter((p) => !p.draft);
 const drafts = projects.filter((p) => p.draft);
+
+/** Inline SVG glyphs keyed by Project.icon (Lucide 24x24, stroke). */
+const ICONS: Record<string, string> = {
+  analytics: '<path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/>',
+  health: '<polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>',
+  terminal: '<polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/>',
+  building:
+    '<rect x="4" y="2" width="16" height="20" rx="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01"/><path d="M16 6h.01"/><path d="M12 6h.01"/><path d="M12 10h.01"/><path d="M12 14h.01"/><path d="M16 10h.01"/><path d="M16 14h.01"/><path d="M8 10h.01"/><path d="M8 14h.01"/>',
+  globe: '<circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/>',
+};
 ---
 
 <section class="py-12" data-reveal>
@@ -20,7 +30,22 @@ const drafts = projects.filter((p) => p.draft);
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 projects-grid">
       {active.map((project) => (
         <Card caseStudy={project.caseStudy}>
-          <h3 class="text-lg font-semibold mb-2">{project.title}</h3>
+          <h3 class="flex items-center gap-2 text-lg font-semibold mb-2">
+            {project.icon && ICONS[project.icon] && (
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="h-5 w-5 shrink-0 text-primary"
+                set:html={ICONS[project.icon]}
+              />
+            )}
+            {project.title}
+          </h3>
           <p class="text-sm text-muted-foreground mb-4 flex-1">{project.description}</p>
           <div class="flex flex-wrap gap-2">
             {project.stack.map((tech) => (
@@ -32,7 +57,20 @@ const drafts = projects.filter((p) => p.draft);
 
       {drafts.map((project) => (
         <Card class="opacity-60">
-          <h3 class="text-lg font-semibold mb-1">
+          <h3 class="flex items-center gap-2 text-lg font-semibold mb-1">
+            {project.icon && ICONS[project.icon] && (
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="h-5 w-5 shrink-0 text-primary"
+                set:html={ICONS[project.icon]}
+              />
+            )}
             {project.title}
             <span class="ml-2 text-xs font-mono text-muted-foreground">DRAFT</span>
           </h3>
