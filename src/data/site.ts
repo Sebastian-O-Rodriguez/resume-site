@@ -36,6 +36,13 @@ export interface SiteConfig {
   projects: Project[];
 }
 
+/** Shared stand-in copy for case studies whose real writing is not yet done. */
+const placeholderCaseStudy = {
+  status: 'placeholder' as const,
+  content:
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\n\nUt enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore.',
+};
+
 export const site: SiteConfig = {
   name: 'Sebastian O Rodriguez',
   brand: 'SOR',
@@ -56,6 +63,7 @@ export const site: SiteConfig = {
       icon: 'analytics',
       href: '/case-studies/guava-bi',
       cta: 'Read the case study',
+      caseStudy: placeholderCaseStudy,
     },
     {
       title: 'RoutineMe',
@@ -64,24 +72,28 @@ export const site: SiteConfig = {
       icon: 'health',
       href: '/case-studies/routineme',
       cta: 'Read the case study',
+      caseStudy: placeholderCaseStudy,
     },
     {
       title: 'guava-os',
       description: 'Control plane for parallel AI coding agents: dependency graphs, worktree isolation, and review gates.',
       stack: ['TypeScript', 'Linear GraphQL', 'OMP'],
       icon: 'terminal',
+      caseStudy: placeholderCaseStudy,
     },
     {
       title: 'PMLaD',
       description: 'Multi-tenant property platform with four-layer RLS tenant isolation and gated Azure CD.',
       stack: ['Next.js', 'NestJS', 'Prisma', 'PostgreSQL 16', 'Azure', 'Clerk'],
       icon: 'building',
+      caseStudy: placeholderCaseStudy,
     },
     {
       title: 'guava-site',
       description: 'Company site on Cloudflare Pages with automated Playwright QA.',
       stack: ['Astro', 'Svelte', 'Tailwind CSS', 'Cloudflare', 'Playwright'],
       icon: 'globe',
+      caseStudy: placeholderCaseStudy,
     },
   ],
 };
