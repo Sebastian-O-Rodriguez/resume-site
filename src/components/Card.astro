@@ -1,13 +1,21 @@
 ---
+import Panel from './Panel.astro';
+
 export interface Props {
   caseStudy?: {
     status: 'published' | 'placeholder';
-    content: string;
+    title?: string;
+    subtitle?: string;
+    body: string;
+    image?: string;
   };
+  /** Project title — panel headline falls back to it. */
+  caseStudyTitle?: string;
   class?: string;
 }
 
-const { caseStudy, class: className = '' } = Astro.props;
+const { caseStudy, caseStudyTitle, class: className = '' } = Astro.props;
+const panelTitle = caseStudy?.title ?? caseStudyTitle ?? 'Case study';
 ---
 
 <article
@@ -15,6 +23,7 @@ const { caseStudy, class: className = '' } = Astro.props;
     'relative rounded-xl border border-border bg-card text-card-foreground shadow-inset transition-[transform,box-shadow] duration-200 hover:[transform:translateY(-2px)] hover:shadow-raised flex flex-col h-full',
     className,
   ]}
+  data-panel-root
 >
   {
     caseStudy && (
@@ -29,39 +38,44 @@ const { caseStudy, class: className = '' } = Astro.props;
   </div>
   {
     caseStudy && (
-      <div class="mt-auto border-t border-border">
+      <div class="mt-auto flex justify-end border-t border-border px-2.5 py-2">
         <button
           type="button"
-          data-case-study-open
-          class="flex w-full items-center justify-center gap-2 px-5 py-3 text-sm font-medium text-primary transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset"
+          data-panel-open
+          aria-haspopup="dialog"
+          aria-label={`Read case study: ${panelTitle}`}
+          title="Read case study"
+          class="inline-flex h-10 w-10 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
         >
-          <span>Read case study</span>
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="h-[18px] w-[18px]"
+          >
+            <polyline points="15 3 21 3 21 9" />
+            <polyline points="9 21 3 21 3 15" />
+            <line x1="21" x2="14" y1="3" y2="10" />
+            <line x1="3" x2="10" y1="21" y2="14" />
+          </svg>
         </button>
       </div>
     )
   }
   {
     caseStudy && (
-      <dialog class="case-study-dialog" data-case-study-dialog>
-        <button
-          type="button"
-          data-case-study-close
-          aria-label="Close case study"
-          class="case-study-close"
-        >
-          <svg
-            aria-hidden="true"
-            viewBox="0 0 16 16"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.5"
-            class="h-5 w-5"
-          >
-            <path d="M4 4l8 8M12 4l-8 8" />
-          </svg>
-        </button>
-        <div class="case-study-dialog-content whitespace-pre-line">{caseStudy.content}</div>
-      </dialog>
+      <Panel
+        title={panelTitle}
+        eyebrow="Case study"
+        subtitle={caseStudy.subtitle}
+        body={caseStudy.body}
+        image={caseStudy.image}
+        imagePlaceholder="Screenshot coming soon"
+      />
     )
   }
 </article>
@@ -83,142 +97,4 @@ const { caseStudy, class: className = '' } = Astro.props;
     background-color: #eab308;
     box-shadow: 0 0 0 3px rgb(234 179 8 / 0.15), 0 0 10px rgb(234 179 8 / 0.55);
   }
-
-  .case-study-dialog {
-    padding: 0;
-    border: 1px solid var(--border);
-    background: var(--card);
-    color: var(--card-foreground);
-    width: 95vw;
-    height: 95vh;
-    max-width: none;
-    max-height: none;
-    overflow: hidden;
-    border-radius: 0.75rem;
-    box-shadow: 0 24px 64px rgb(92 72 45 / 0.35);
-  }
-
-  .case-study-dialog[open] {
-    animation: case-study-expand 200ms ease-out;
-  }
-
-  .case-study-dialog::backdrop {
-    background: rgb(0 0 0 / 0.45);
-  }
-
-  .case-study-dialog[open]::backdrop {
-    animation: case-study-fade 200ms ease-out;
-  }
-
-  @keyframes case-study-expand {
-    from {
-      opacity: 0;
-      transform: scale(0.96);
-    }
-    to {
-      opacity: 1;
-      transform: scale(1);
-    }
-  }
-
-  @keyframes case-study-fade {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-
-  .case-study-close {
-    position: absolute;
-    top: 0.875rem;
-    right: 0.875rem;
-    z-index: 10;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 2rem;
-    height: 2rem;
-    border-radius: 9999px;
-    border: none;
-    background: transparent;
-    color: var(--muted-foreground);
-    cursor: pointer;
-    transition: background-color 150ms ease-out, color 150ms ease-out;
-  }
-  .case-study-close:hover {
-    background: var(--accent);
-    color: var(--accent-foreground);
-  }
-  .case-study-close:focus-visible {
-    outline: 2px solid var(--ring);
-    outline-offset: 2px;
-  }
-
-  .case-study-dialog-content {
-    height: 100%;
-    overflow-y: auto;
-    padding: 2.5rem 2rem 2rem;
-    font-size: 0.875rem;
-    line-height: 1.625;
-    color: var(--foreground);
-  }
-
-  @media (max-width: 640px) {
-    .case-study-dialog {
-      width: 100vw;
-      height: 100dvh;
-      max-width: 100vw;
-      max-height: 100dvh;
-      border-radius: 0;
-      border: none;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .case-study-dialog[open],
-    .case-study-dialog[open]::backdrop {
-      animation: none;
-    }
-    .case-study-close {
-      transition: none;
-    }
-  }
 </style>
-
-<script>
-  const dialogs = document.querySelectorAll('[data-case-study-dialog]');
-
-  dialogs.forEach((dialog) => {
-    const openBtn = dialog.closest('article')?.querySelector('[data-case-study-open]');
-    const closeBtn = dialog.querySelector('[data-case-study-close]');
-
-    openBtn?.addEventListener('click', () => {
-      dialog.showModal();
-      document.body.style.overflow = 'hidden';
-    });
-
-    closeBtn?.addEventListener('click', () => {
-      dialog.close();
-    });
-
-    // Backdrop click closes: a click landing outside the dialog's box is on the ::backdrop.
-    dialog.addEventListener('click', (event) => {
-      const rect = dialog.getBoundingClientRect();
-      const inside =
-        event.clientX >= rect.left &&
-        event.clientX <= rect.right &&
-        event.clientY >= rect.top &&
-        event.clientY <= rect.bottom;
-      if (!inside) {
-        dialog.close();
-      }
-    });
-
-    // Restore scroll lock on every close path (ESC, backdrop, X).
-    dialog.addEventListener('close', () => {
-      document.body.style.overflow = '';
-    });
-  });
-</script>

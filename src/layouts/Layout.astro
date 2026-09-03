@@ -3,6 +3,7 @@ import '../styles/global.css';
 import Container from '../components/Container.astro';
 import ThemeToggle from '../components/ThemeToggle.astro';
 import Button from '../components/Button.astro';
+import Panel from '../components/Panel.astro';
 import { site } from '../data/site';
 import Analytics from '@vercel/analytics/astro';
 
@@ -82,7 +83,25 @@ const { name, links } = site;
           </a>
 
           <nav aria-label="Social links" class="flex flex-wrap items-center gap-2 justify-end">
-            {links.map((link) => (
+          {links.map((link) =>
+            link.href === site.resume.download.href ? (
+              <div class="relative" data-panel-root>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  attributes={{ 'data-panel-open': true, 'aria-haspopup': 'dialog', 'data-track-click': true, 'data-track-event': 'click', 'data-track-label': link.label }}
+                >
+                  {link.label}
+                </Button>
+                <Panel
+                  title={site.resume.title}
+                  eyebrow={site.resume.eyebrow}
+                  subtitle={site.resume.subtitle}
+                  body={site.resume.body}
+                  download={site.resume.download}
+                />
+              </div>
+            ) : (
               <Button
                 href={link.href}
                 variant="outline"
@@ -91,7 +110,8 @@ const { name, links } = site;
               >
                 {link.label}
               </Button>
-            ))}
+            )
+          )}
             <ThemeToggle />
           </nav>
         </div>

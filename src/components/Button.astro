@@ -4,9 +4,18 @@ export interface Props {
   variant?: 'default' | 'outline' | 'ghost';
   size?: 'sm' | 'md' | 'lg';
   class?: string;
+  /** Extra attributes forwarded to the rendered <a>/<button> (data-*, aria-*, …). */
+  attributes?: Record<string, string | boolean | undefined>;
 }
 
-const { href, variant = 'default', size = 'md', class: className = '' } = Astro.props;
+const {
+  href,
+  variant = 'default',
+  size = 'md',
+  class: className = '',
+  attributes = {},
+  ...rest
+} = Astro.props;
 
 const base = 'inline-flex items-center justify-center font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50';
 
@@ -27,11 +36,11 @@ const cls = `${base} ${variants[variant]} ${sizes[size]} ${className}`;
 
 {
   href ? (
-    <a href={href} class={cls} target="_blank" rel="noopener noreferrer">
+    <a href={href} class={cls} target="_blank" rel="noopener noreferrer" {...attributes} {...rest}>
       <slot />
     </a>
   ) : (
-    <button class={cls}>
+    <button class={cls} {...attributes} {...rest}>
       <slot />
     </button>
   )

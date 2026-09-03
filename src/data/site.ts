@@ -13,9 +13,23 @@ export interface Project {
   href?: string;
   /** CTA label rendered when href is set. */
   cta?: string;
-  /** Inline case-study body expanded in place on the card. */
-  caseStudy?: { status: 'published' | 'placeholder'; content: string };
+  /** Panel content opened by the card's expand control. */
+  caseStudy?: CaseStudy;
   draft?: boolean;
+}
+
+/** Structured panel content — one template serves case studies and the résumé. */
+export interface CaseStudy {
+  /** Draft until the real write-up lands. */
+  status: 'published' | 'placeholder';
+  /** Panel headline; falls back to the project title when omitted. */
+  title?: string;
+  /** One-line deck under the headline. */
+  subtitle?: string;
+  /** Body copy; blank line between paragraphs. */
+  body: string;
+  /** Hero image served from /public; a placeholder figure renders when omitted. */
+  image?: string;
 }
 
 export interface Link {
@@ -32,16 +46,29 @@ export interface SiteConfig {
   photoPath: string;
   tagline: string;
   blurb: string;
+  /** Résumé panel opened from the header nav trigger. */
+  resume: {
+    title: string;
+    eyebrow: string;
+    subtitle: string;
+    body: string;
+    download: { href: string; filename: string; label: string };
+  };
   links: Link[];
   projects: Project[];
 }
 
 /** Shared stand-in copy for case studies whose real writing is not yet done. */
-const placeholderCaseStudy = {
-  status: 'placeholder' as const,
-  content:
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\n\nUt enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore.',
+const placeholderCaseStudy: CaseStudy = {
+  status: 'placeholder',
+  subtitle: 'Draft — full case study coming soon.',
+  body: [
+    'Overview of the problem, the constraints, and why it mattered.',
+    'How the system was designed and built — key decisions, trade-offs, and what shipped.',
+    'What it achieved in practice, and what comes next.',
+  ].join('\n\n'),
 };
+
 
 export const site: SiteConfig = {
   name: 'Sebastian O Rodriguez',
@@ -50,6 +77,13 @@ export const site: SiteConfig = {
   photoPath: '/profile.svg',
   tagline: 'I build reliable AI systems close to the code — evaluated, guarded, and shipped end-to-end.',
   blurb: `Applied AI engineer building reliable LLM systems close to the code: golden-set evals with regression floors, user-grounded RAG, bounded agent workflows, and per-call observability, with strict security and testing discipline. Founder of Guava AI; previously Scale AI and Salesforce.`,
+  resume: {
+    title: 'Résumé',
+    eyebrow: 'Sebastian O Rodriguez',
+    subtitle: 'Carnegie Mellon University · BS Technology & Sonic Product Innovation (2020)',
+    body: 'Applied AI engineer building reliable LLM systems: golden-set evals with regression floors, user-grounded RAG, and bounded agent workflows.\n\nFounder of Guava AI; previously Scale AI and Salesforce. The full history is in the PDF — grab it from the download button in the panel.',
+    download: { href: '/resume.pdf', filename: 'Sebastian-O-Rodriguez-Resume.pdf', label: 'Download résumé (PDF)' },
+  },
   links: [
     { label: 'Resume', href: '/resume.pdf' },
     { label: 'LinkedIn', href: 'https://linkedin.com/in/sebastianorodriguez' },
