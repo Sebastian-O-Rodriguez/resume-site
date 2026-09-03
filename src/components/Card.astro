@@ -38,7 +38,7 @@ const panelTitle = caseStudy?.title ?? caseStudyTitle ?? 'Case study';
   </div>
   {
     caseStudy && (
-      <div class="mt-auto flex justify-end border-t border-border px-2.5 py-2">
+      <div class="mt-auto flex justify-end px-2.5 py-2">
         <button
           type="button"
           data-panel-open
@@ -57,10 +57,10 @@ const panelTitle = caseStudy?.title ?? caseStudyTitle ?? 'Case study';
             stroke-linejoin="round"
             class="h-[18px] w-[18px]"
           >
-            <polyline points="15 3 21 3 21 9" />
-            <polyline points="9 21 3 21 3 15" />
-            <line x1="21" x2="14" y1="3" y2="10" />
-            <line x1="3" x2="10" y1="21" y2="14" />
+            <path d="M21 21v-4.8M21 16.2 15 10" />
+            <path d="M21 7.8V3m0 0h-4.8M21 3l-6 6" />
+            <path d="M3 16.2V21m0 0h4.8M3 21l6-6" />
+            <path d="M3 7.8V3m0 0h4.8M3 3l6 6" />
           </svg>
         </button>
       </div>
