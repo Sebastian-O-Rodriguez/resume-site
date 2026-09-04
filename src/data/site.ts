@@ -49,11 +49,6 @@ export interface SiteConfig {
   /** resume panel opened from the header nav trigger. */
   resume: {
     title: string;
-    eyebrow: string;
-    subtitle: string;
-    body: string;
-    /** Document embedded in the panel (e.g. the resume PDF). */
-    embed?: { src: string; type?: string };
     download: { href: string; filename: string; label: string };
   };
   links: Link[];
@@ -78,17 +73,12 @@ export const site: SiteConfig = {
   education: 'Carnegie Mellon University · BS Technology & Sonic Product Innovation, Minor Business Administration (2020)',
   photoPath: '/profile.svg',
   tagline: 'I build reliable AI systems close to the code — evaluated, guarded, and shipped end-to-end.',
-  blurb: `Applied AI engineer building reliable LLM systems close to the code: golden-set evals with regression floors, user-grounded RAG, bounded agent workflows, and per-call observability, with strict security and testing discipline. Founder of Guava AI; previously Scale AI and Salesforce.`,
   resume: {
-    title: 'resume',
-    eyebrow: 'Sebastian O Rodriguez',
-    subtitle: 'Carnegie Mellon University · BS Technology & Sonic Product Innovation (2020)',
-    body: '',
-    embed: { src: '/resume.pdf', type: 'application/pdf' },
-    download: { href: '/resume.pdf', filename: 'Sebastian-O-Rodriguez-Resume.pdf', label: 'Download resume (PDF)' },
+    title: "Sebastian's Resume",
+    download: { href: '/resume.pdf', filename: 'Sebastian-O-Rodriguez-Resume.pdf', label: 'Download Resume (PDF)' },
   },
   links: [
-    { label: 'resume', href: '/resume.pdf' },
+    { label: 'Resume', href: '/resume.pdf' },
     { label: 'LinkedIn', href: 'https://linkedin.com/in/sebastianorodriguez' },
     { label: 'GitHub', href: 'https://github.com/Sebastian-O-Rodriguez' },
   ],

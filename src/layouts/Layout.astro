@@ -5,6 +5,7 @@ import ThemeToggle from '../components/ThemeToggle.astro';
 import Button from '../components/Button.astro';
 import Panel from '../components/Panel.astro';
 import { site } from '../data/site';
+import * as ResumeDoc from '../../content/resume/resume.md';
 import Analytics from '@vercel/analytics/astro';
 
 export interface Props {
@@ -93,14 +94,9 @@ const { name, links } = site;
                 >
                   {link.label}
                 </Button>
-                <Panel
-                  title={site.resume.title}
-                  eyebrow={site.resume.eyebrow}
-                  subtitle={site.resume.subtitle}
-                  body={site.resume.body}
-                  embed={site.resume.embed}
-                  download={site.resume.download}
-                />
+                <Panel title={site.resume.title} download={site.resume.download}>
+                  <Fragment slot="doc"><ResumeDoc.Content /></Fragment>
+                </Panel>
               </div>
             ) : (
               <Button
