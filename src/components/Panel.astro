@@ -117,20 +117,10 @@ const external = Boolean(href && /^https?:/.test(href));
 
 <style>
   .panel-dialog {
-    /* Paper content surface — stays a light "paper" card in both light and dark
-       site themes, so the expanded case-study copy stays legible. */
-    color-scheme: light;
-    background: #ffffff;
-    color: #322418;
-    --foreground: #322418;
-    --card-foreground: #322418;
-    --primary: #322418;
-    --primary-foreground: #ffffff;
-    --muted-foreground: #6b5b48;
-    --border: #d8cdbb;
-    --accent: #f2ece2;
-    --accent-foreground: #322418;
-    --ring: #5c482d;
+    /* Surface follows the active theme's card token; text inherits the theme's
+       foreground, so case-study copy stays legible in light and dark. */
+    background: var(--card);
+    color: var(--foreground);
     /* Center deterministically — preflight resets UA margin:auto to 0. */
     position: fixed;
     inset: 0;
