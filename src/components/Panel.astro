@@ -181,8 +181,8 @@ const external = Boolean(href && /^https?:/.test(href));
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    height: 2.5rem;
-    width: 2.5rem;
+    height: 2.75rem;
+    width: 2.75rem;
     border-radius: 0.375rem;
     color: var(--muted-foreground);
     transition: background-color 150ms ease-out, color 150ms ease-out;
@@ -261,7 +261,7 @@ const external = Boolean(href && /^https?:/.test(href));
     font-weight: 600;
     line-height: 1.2;
     color: var(--foreground);
-    padding-right: 5.5rem; /* keep clear of the actions row */
+    padding-right: 6rem; /* keep clear of the actions row */
   }
 
   .panel-subtitle {
@@ -340,7 +340,10 @@ const external = Boolean(href && /^https?:/.test(href));
       border: none;
     }
     .panel-content {
-      padding: 3.5rem 1.25rem 1.5rem;
+      padding: 4rem 1.25rem 1.5rem;
+    }
+    .panel-title {
+      font-size: 1.5rem;
     }
     .panel-figure-placeholder {
       aspect-ratio: 4 / 3;

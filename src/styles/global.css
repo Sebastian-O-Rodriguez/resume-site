@@ -101,6 +101,27 @@ h1, h2, h3, h4 {
   line-height: 1.2;
 }
 
+/* === Projects grid: breakpoint-free column flow ===
+ * Columns are added only when a full 16rem track fits, and stretch to fill
+ * the row (1fr), so cards shrink smoothly across widths with no abrupt
+ * sm/lg column jump. min(100%,16rem) guards against overflow below 16rem. */
+.projects-grid {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+}
+
+/* === Touch targets (>= 44px) ===
+ * Header nav links/buttons and the theme toggle use compact heights on
+ * desktop (via utility classes); enforce WCAG target size on coarse
+ * pointers by raising their minimum size on small screens. */
+@media (max-width: 640px) {
+  header nav a,
+  header nav button,
+  #theme-toggle {
+    min-height: 2.75rem; /* 44px */
+    min-width: 2.75rem;
+  }
+}
+
 /* === Reduced motion === */
 @media (prefers-reduced-motion: reduce) {
   *,

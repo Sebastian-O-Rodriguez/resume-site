@@ -21,7 +21,7 @@ const panelTitle = caseStudy?.title ?? caseStudyTitle ?? 'Case study';
 
 <article
   class:list={[
-    'relative rounded-xl border border-border bg-card text-card-foreground shadow-inset transition-[transform,box-shadow] duration-200 hover:[transform:translateY(-2px)] hover:shadow-raised flex flex-col h-full',
+    'relative rounded-xl border border-border bg-card text-card-foreground shadow-inset transition-[transform,box-shadow] duration-200 hover:[transform:translateY(-2px)] hover:shadow-raised flex flex-col project-card',
     className,
   ]}
   data-panel-root
@@ -30,7 +30,8 @@ const panelTitle = caseStudy?.title ?? caseStudyTitle ?? 'Case study';
     caseStudy && (
       <span
         class:list={['case-status-dot', caseStudy.status]}
-        title={caseStudy.status === 'published' ? 'Case study available' : 'Case study pending'}
+        role="img"
+        aria-label={caseStudy.status === 'published' ? 'Case study available' : 'Case study pending'}
       />
     )
   }
@@ -44,10 +45,9 @@ const panelTitle = caseStudy?.title ?? caseStudyTitle ?? 'Case study';
           type="button"
           data-panel-open
           aria-haspopup="dialog"
-          aria-label={`Read case study: ${panelTitle}`}
-          title="Read case study"
-          class="inline-flex h-10 w-10 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+          class="inline-flex h-11 items-center justify-center gap-2 rounded-md px-3 text-sm font-medium text-primary transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
         >
+          <span>Read case study</span>
           <svg
             aria-hidden="true"
             viewBox="0 0 24 24"
@@ -56,7 +56,7 @@ const panelTitle = caseStudy?.title ?? caseStudyTitle ?? 'Case study';
             stroke-width="1.8"
             stroke-linecap="round"
             stroke-linejoin="round"
-            class="h-[18px] w-[18px]"
+            class="h-4 w-4"
           >
             <path d="M21 21v-4.8M21 16.2 15 10" />
             <path d="M21 7.8V3m0 0h-4.8M21 3l-6 6" />
@@ -83,6 +83,12 @@ const panelTitle = caseStudy?.title ?? caseStudyTitle ?? 'Case study';
 </article>
 
 <style>
+  /* Square floor keeps cards from collapsing into squat wide rectangles as
+   * column widths change; grid items grow beyond this if content is taller. */
+  .project-card {
+    aspect-ratio: 1 / 1;
+  }
+
   .case-status-dot {
     position: absolute;
     top: 0.875rem;
