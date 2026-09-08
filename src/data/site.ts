@@ -9,7 +9,7 @@ export interface Project {
   stack: string[];
   /** Domain icon key — rendered before the card title (see Projects.astro). */
   icon?: string;
-  /** Case-study / evidence link (primary CTA). Omitted for non-clickable secondary cards. */
+  /** Outbound link rendered as a CTA at the end of the panel. */
   href?: string;
   /** CTA label rendered when href is set. */
   cta?: string;
@@ -78,8 +78,8 @@ export const site: SiteConfig = {
       description: 'Deterministic analytics for ERP-heavy distributors behind an LLM trust boundary — AI proposes, never computes.',
       stack: ['Python', 'FastAPI', 'Next.js', 'PostgreSQL', 'Polars', 'OpenRouter'],
       icon: 'analytics',
-      href: '/case-studies/guava-bi',
-      cta: 'Read the case study',
+      href: 'https://github.com/Sebastian-O-Rodriguez/showcase-guavabi',
+      cta: 'View showcase',
       caseStudy: {
         status: 'published',
         subtitle: 'Deterministic analytics behind an LLM trust boundary for ERP-heavy distributors.',
@@ -97,8 +97,8 @@ Anomaly detection runs in two layers — stockout, overstock, shrinkage, trend r
       description: 'Production AI health tracker: user-grounded RAG nutrition estimates, typed actions, and real-model evals.',
       stack: ['Expo', 'React Native', 'Supabase', 'OpenRouter', 'Zod'],
       icon: 'health',
-      href: '/case-studies/routineme',
-      cta: 'Read the case study',
+      href: 'https://github.com/Sebastian-O-Rodriguez/showcase-routine-me',
+      cta: 'View showcase',
       caseStudy: {
         status: 'published',
         subtitle: 'A production AI health tracker where chat and direct input converge on one typed action path.',
@@ -116,6 +116,8 @@ Identity is derived from the Supabase JWT, never trusted from the client. RLS sc
       description: 'Control plane for parallel AI coding agents: dependency graphs, worktree isolation, and review gates.',
       stack: ['TypeScript', 'Linear GraphQL', 'OMP'],
       icon: 'terminal',
+      href: '/guava-os',
+      cta: 'Read the full story',
       caseStudy: {
         status: 'published',
         subtitle: 'A control plane for parallel coding agents: dependency graphs, worktree isolation, and review gates.',
@@ -133,6 +135,8 @@ Enforcement is structural. Quality gates, promotion gates, and role boundaries a
       description: 'Multi-tenant property platform with four-layer RLS tenant isolation and gated Azure CD.',
       stack: ['Next.js', 'NestJS', 'Prisma', 'PostgreSQL 16', 'Azure', 'Clerk'],
       icon: 'building',
+      href: 'https://github.com/Sebastian-O-Rodriguez/showcase-pmlad',
+      cta: 'View showcase',
       caseStudy: {
         status: 'published',
         subtitle: 'A multi-tenant property platform with database-level RLS isolation and gated Azure CD.',
@@ -150,6 +154,8 @@ Delivery runs through gated Azure continuous deployment — lint, tests, build, 
       description: 'Company site on Cloudflare Pages with automated Playwright QA.',
       stack: ['Astro', 'Svelte', 'Tailwind CSS', 'Cloudflare', 'Playwright'],
       icon: 'globe',
+      href: 'https://guavaai.ai',
+      cta: 'Visit full site',
       caseStudy: {
         status: 'published',
         subtitle: 'The public home for Guava AI — a fast, mostly-static site with automated Playwright QA.',
