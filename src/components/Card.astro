@@ -8,6 +8,7 @@ export interface Props {
     subtitle?: string;
     body: string;
     image?: string;
+    image2?: string;
   };
   /** Project title — panel headline falls back to it. */
   caseStudyTitle?: string;
@@ -74,6 +75,7 @@ const panelTitle = caseStudy?.title ?? caseStudyTitle ?? 'Case study';
         subtitle={caseStudy.subtitle}
         body={caseStudy.body}
         image={caseStudy.image}
+        image2={caseStudy.image2}
         imagePlaceholder="Screenshot coming soon"
       />
     )

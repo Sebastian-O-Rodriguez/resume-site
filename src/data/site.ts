@@ -30,6 +30,8 @@ export interface CaseStudy {
   body: string;
   /** Hero image served from /public; a placeholder figure renders when omitted. */
   image?: string;
+  /** Second image rendered below the hero in the panel. */
+  image2?: string;
 }
 
 export interface Link {
@@ -55,18 +57,6 @@ export interface SiteConfig {
   projects: Project[];
 }
 
-/** Shared stand-in copy for case studies whose real writing is not yet done. */
-const placeholderCaseStudy: CaseStudy = {
-  status: 'placeholder',
-  subtitle: 'Draft — full case study coming soon.',
-  body: [
-    'Overview of the problem, the constraints, and why it mattered.',
-    'How the system was designed and built — key decisions, trade-offs, and what shipped.',
-    'What it achieved in practice, and what comes next.',
-  ].join('\n\n'),
-};
-
-
 export const site: SiteConfig = {
   name: 'Sebastian O Rodriguez',
   brand: 'SOR',
@@ -90,7 +80,17 @@ export const site: SiteConfig = {
       icon: 'analytics',
       href: '/case-studies/guava-bi',
       cta: 'Read the case study',
-      caseStudy: placeholderCaseStudy,
+      caseStudy: {
+        status: 'published',
+        subtitle: 'Deterministic analytics behind an LLM trust boundary for ERP-heavy distributors.',
+        image: '/case-studies/guava-bi/1.png',
+        image2: '/case-studies/guava-bi/2.png',
+        body: `Distributors run on fragmented ERP exports — CSVs spanning products, inventory, orders, suppliers, and warehouses. Guava BI ingests that operational data, validates it into a canonical PostgreSQL schema, and computes every metric deterministically.
+
+LLMs participate only where they can't corrupt the numbers: parsing intent, suggesting field mappings, and explaining results. They never compute metrics, write SQL, or touch the schema. A validated pipeline turns structured intent into deterministic SQL.
+
+Anomaly detection runs in two layers — stockout, overstock, shrinkage, trend reversals — surfaced in a Spotlight feed with full source traceability. 316 backend tests and five Playwright specs gate every merge.`,
+      },
     },
     {
       title: 'RoutineMe',
@@ -99,28 +99,68 @@ export const site: SiteConfig = {
       icon: 'health',
       href: '/case-studies/routineme',
       cta: 'Read the case study',
-      caseStudy: placeholderCaseStudy,
+      caseStudy: {
+        status: 'published',
+        subtitle: 'A production AI health tracker where chat and direct input converge on one typed action path.',
+        image: '/case-studies/routineme/1.png',
+        image2: '/case-studies/routineme/2.png',
+        body: `RoutineMe tracks nutrition, gym, running, habits, and goals from chat or direct input. Both paths converge on the same typed Action object and route through one executor into RLS-scoped PostgreSQL mutations.
+
+The chat pipeline is a four-stage server-side flow — classify, normalize, estimate, propose. Only classification and macro estimation touch an LLM; every proposal waits for user confirmation before any write.
+
+Identity is derived from the Supabase JWT, never trusted from the client. RLS scopes all five tables, rate limits guard expensive endpoints, and Vitest suites cover auth, cross-user isolation, and the full chat workflow.`,
+      },
     },
     {
       title: 'guava-os',
       description: 'Control plane for parallel AI coding agents: dependency graphs, worktree isolation, and review gates.',
       stack: ['TypeScript', 'Linear GraphQL', 'OMP'],
       icon: 'terminal',
-      caseStudy: placeholderCaseStudy,
+      caseStudy: {
+        status: 'published',
+        subtitle: 'A control plane for parallel coding agents: dependency graphs, worktree isolation, and review gates.',
+        image: '/case-studies/guava-os/1.svg',
+        image2: '/case-studies/guava-os/2.svg',
+        body: `guava-os coordinates teams of coding agents the way a build system coordinates tasks. A session opens in Chat & Plan: the problem decomposes into a dependency graph of scoped deliverables, not one monolithic prompt.
+
+Agents dispatch in waves — only slices whose dependencies are satisfied fan out, each in its own isolated worktree. A review gate inspects every diff before merge; nothing reaches staging or production without passing.
+
+Enforcement is structural. Quality gates, promotion gates, and role boundaries are configured, not requested — unready work is refused with a reason. TypeScript, Linear's GraphQL, and the OMP harness carry the orchestration.`,
+      },
     },
     {
       title: 'PMLaD',
       description: 'Multi-tenant property platform with four-layer RLS tenant isolation and gated Azure CD.',
       stack: ['Next.js', 'NestJS', 'Prisma', 'PostgreSQL 16', 'Azure', 'Clerk'],
       icon: 'building',
-      caseStudy: placeholderCaseStudy,
+      caseStudy: {
+        status: 'published',
+        subtitle: 'A multi-tenant property platform with database-level RLS isolation and gated Azure CD.',
+        image: '/case-studies/pmlad/1.png',
+        image2: '/case-studies/pmlad/2.png',
+        body: `PMLaD gives property managers one system for properties, portfolios, tasks, and inbox — a TypeScript monorepo spanning Next.js 15, NestJS 10, and Prisma 6, with shared Zod schemas and OpenAPI bindings.
+
+Tenant isolation is the load-bearing feature. Postgres row-level security scopes all twelve tenant-owned tables to the caller's organization, enforced by a restricted application role with a crash-on-fail startup check.
+
+Delivery runs through gated Azure continuous deployment — lint, tests, build, and OpenAPI drift checks must pass before a change promotes. Now in dogfooding, the system is exercised by real property workflows.`,
+      },
     },
     {
       title: 'guava-site',
       description: 'Company site on Cloudflare Pages with automated Playwright QA.',
       stack: ['Astro', 'Svelte', 'Tailwind CSS', 'Cloudflare', 'Playwright'],
       icon: 'globe',
-      caseStudy: placeholderCaseStudy,
+      caseStudy: {
+        status: 'published',
+        subtitle: 'The public home for Guava AI — a fast, mostly-static site with automated Playwright QA.',
+        image: '/case-studies/guava-site/1.png',
+        image2: '/case-studies/guava-site/2.png',
+        body: `guava-site is Guava AI's public face: company positioning, product pages, and the workflows being built under it. Astro ships static HTML by default, so pages load fast with no framework overhead.
+
+Interactive sections — the capability explorer and the 'how we work' visual — are isolated Svelte components behind clear boundaries, so the rest of the site stays plain markup. Tailwind handles the visual system; GSAP motion honors prefers-reduced-motion.
+
+Every branch deploys to Cloudflare Pages, and automated Playwright QA exercises the site so regressions surface before they ship. Boring decisions done carefully: minimal JavaScript, visible content, and no animation hiding the message.`,
+      },
     },
   ],
 };

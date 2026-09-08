@@ -13,13 +13,15 @@ export interface Props {
   body?: string;
   /** Hero image served from /public. */
   image?: string;
+  /** Second image rendered below the hero in the panel. */
+  image2?: string;
   /** Renders a dashed figure placeholder (label) when no image is set. */
   imagePlaceholder?: string;
   /** Renders a download icon button in the panel actions row. */
   download?: { href: string; filename?: string; label: string };
 }
 
-const { title, eyebrow, subtitle, body = '', image, imagePlaceholder, download } = Astro.props;
+const { title, eyebrow, subtitle, body = '', image, image2, imagePlaceholder, download } = Astro.props;
 const paragraphs = body.split(/\n{2,}/).filter(Boolean);
 ---
 
@@ -70,6 +72,13 @@ const paragraphs = body.split(/\n{2,}/).filter(Boolean);
         )
       }
     </figure>
+    {
+      image2 && (
+        <figure class="panel-figure">
+          <img class="panel-image" src={image2} alt={`${title} screenshot 2`} loading="lazy" />
+        </figure>
+      )
+    }
     {
       paragraphs.length > 0 && (
         <div class="panel-body">

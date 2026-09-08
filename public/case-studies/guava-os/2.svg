@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="548" viewBox="0 0 720 548">
+<rect width="720" height="548" fill="#0d1117"/>
+<g transform="translate(40,40)">
+  <rect width="640" height="242" rx="10" fill="#161b22" stroke="#30363d"/>
+  <circle cx="18" cy="20" r="6" fill="#ff5f56"/><circle cx="38" cy="20" r="6" fill="#ffbd2e"/><circle cx="58" cy="20" r="6" fill="#27c93f"/>
+  <text x="624" y="24" text-anchor="end" font-family="Menlo,monospace" font-size="12" fill="#8b949e">Chat &amp; Plan — decompose into a dependency graph</text>
+
+  <text x="16" y="64" font-family="Menlo,monospace" font-size="12.5" fill="#7ee787">$ gos plan "tenant-aware report export"</text>
+  <text x="16" y="84" font-family="Menlo,monospace" font-size="12.5" fill="#c9d1d9">  api-schema ──▶ report-service ──▶ web-export</text>
+  <text x="16" y="104" font-family="Menlo,monospace" font-size="12.5" fill="#c9d1d9">                    ▲</text>
+  <text x="16" y="124" font-family="Menlo,monospace" font-size="12.5" fill="#c9d1d9">  auth-gate ───────┘</text>
+  <text x="16" y="148" font-family="Menlo,monospace" font-size="12.5" fill="#58a6ff">  wave 1  api-schema · auth-gate        (parallel)</text>
+  <text x="16" y="168" font-family="Menlo,monospace" font-size="12.5" fill="#58a6ff">  wave 2  report-service                (needs wave 1)</text>
+  <text x="16" y="188" font-family="Menlo,monospace" font-size="12.5" fill="#58a6ff">  wave 3  web-export                    (needs report-service)</text>
+  <text x="16" y="216" font-family="Menlo,monospace" font-size="12.5" fill="#8b949e">only runnable slices dispatch — each in its own worktree</text>
+</g>
+<g transform="translate(40,306)">
+  <rect width="640" height="202" rx="10" fill="#161b22" stroke="#30363d"/>
+  <circle cx="18" cy="20" r="6" fill="#ff5f56"/><circle cx="38" cy="20" r="6" fill="#ffbd2e"/><circle cx="58" cy="20" r="6" fill="#27c93f"/>
+  <text x="624" y="24" text-anchor="end" font-family="Menlo,monospace" font-size="12" fill="#8b949e">the review gate — nothing merges without passing</text>
+
+  <text x="16" y="64" font-family="Menlo,monospace" font-size="12.5" fill="#7ee787">$ gos review 3f2a1c</text>
+  <text x="16" y="84" font-family="Menlo,monospace" font-size="12.5" fill="#c9d1d9">  diff   4 files · +137 −44</text>
+  <text x="16" y="104" font-family="Menlo,monospace" font-size="12.5" fill="#c9d1d9">  gates  typecheck ✓ · tests ✓ · scope ✓ · rls ✓</text>
+  <text x="16" y="128" font-family="Menlo,monospace" font-size="12.5" fill="#f0883e">  ! 1 refused earlier: unready work, reason attached</text>
+  <text x="16" y="152" font-family="Menlo,monospace" font-size="12.5" fill="#7ee787">  verdict  APPROVE → merge to staging</text>
+  <text x="16" y="180" font-family="Menlo,monospace" font-size="12.5" fill="#8b949e">promotion is configured — gates are enforced, not requested</text>
+</g>
+</svg>
