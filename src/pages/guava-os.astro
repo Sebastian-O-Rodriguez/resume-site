@@ -1,0 +1,90 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Container from '../components/Container.astro';
+import Badge from '../components/Badge.astro';
+---
+
+<Layout title="Building with guava-os">
+  <Container>
+    <article class="py-12 md:py-16">
+      <div class="mx-auto max-w-3xl">
+        <header class="mb-10">
+          <p class="text-sm font-mono text-muted-foreground mb-3">Case study · guava-os</p>
+          <h1 class="text-3xl md:text-4xl font-serif font-semibold leading-tight">
+            A control plane for agents, and the loop I use to build with them
+          </h1>
+          <p class="mt-4 text-base md:text-lg text-muted-foreground leading-relaxed">
+            guava-os is how I orchestrate parallel AI coding agents. It didn't start as a product — it
+            started as a loop I kept repeating by hand until the repetition begged to be codified.
+          </p>
+        </header>
+
+        <div class="space-y-12 text-sm md:text-base leading-relaxed text-foreground/90">
+          <section data-reveal>
+            <h2 class="text-xl md:text-2xl font-serif font-semibold mb-4">Chat &amp; plan is the core loop</h2>
+            <p class="mb-4 text-muted-foreground">
+              Every piece of work starts as a conversation, and the first artifact is never code — it's a
+              plan. I describe a goal in plain language, then push on it until it decomposes into scoped,
+              verifiable units. This is where I separate <em>what</em> from <em>how</em>, and where I name
+              the contracts between pieces before anyone touches a file.
+            </p>
+            <p class="text-muted-foreground">
+              Planning is the step that compounds. A plan that names its boundaries and its acceptance
+              criteria makes the next three steps boring — and boring is the point. The loop is short:
+              chat to a plan, plan to dispatched work, work to a gate, gate back to chat. Most of the real
+              thinking lives in the first turn and the last one; the middle should run itself.
+            </p>
+          </section>
+
+          <section data-reveal>
+            <h2 class="text-xl md:text-2xl font-serif font-semibold mb-4">Dispatching work to agents</h2>
+            <p class="mb-4 text-muted-foreground">
+              Once the plan exists, its units fan out to workers. Each worker gets a self-contained brief:
+              the files it owns, the pattern it should follow, and the acceptance it has to meet. Isolation
+              is the whole point — agents that never touch the same file can run in parallel without
+              colliding. Dependencies become explicit edges, so a unit only starts when its upstream has
+              landed.
+            </p>
+            <p class="text-muted-foreground">
+              What I don't do is hand an agent a blank page and hope. A worker with no context invents
+              context, and invented context produces confident, wrong work. So the dispatch step carries
+              the shape of the problem, not just the task. The harder the job, the more of my own judgment
+              gets folded into the brief before it goes out.
+            </p>
+          </section>
+
+          <section data-reveal>
+            <h2 class="text-xl md:text-2xl font-serif font-semibold mb-4">Gates and enforcement</h2>
+            <p class="mb-4 text-muted-foreground">
+              Parallelism is only as safe as the gate that reviews its output. Every change comes back
+              through a review that reads the diff and checks it against the plan that spawned it — did the
+              work do what the issue asked, and did it respect the conventions it was handed? A gate
+              authorizes the merge; the worker that wrote the code doesn't. Nothing lands on a shared
+              branch until it passes, and no worker ever merges toward production on its own.
+            </p>
+            <p class="text-muted-foreground">
+              The gates are what make the loop trustworthy enough to run unattended. Speed without them is
+              just a faster way to break a shared branch. With them, I can let a dozen agents run while I
+              do the only part a human should: decide what's worth building, and judge whether what came
+              back is actually good.
+            </p>
+          </section>
+
+          <section data-reveal>
+            <h2 class="text-xl md:text-2xl font-serif font-semibold mb-4">Stack notes</h2>
+            <p class="mb-4 text-muted-foreground">
+              The system is TypeScript end to end — one language from orchestration to worker runtime keeps
+              the contract surface small. Work lives in Linear, and its GraphQL API is the source of truth:
+              issues are the state of record, comments carry the trail, and statuses drive the gates.
+            </p>
+            <div class="flex flex-wrap gap-2">
+              <Badge variant="secondary">TypeScript</Badge>
+              <Badge variant="secondary">Linear GraphQL</Badge>
+              <Badge variant="secondary">OMP</Badge>
+            </div>
+          </section>
+        </div>
+      </div>
+    </article>
+  </Container>
+</Layout>
