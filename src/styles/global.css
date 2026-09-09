@@ -101,12 +101,14 @@ h1, h2, h3, h4 {
   line-height: 1.2;
 }
 
-/* === Projects grid: breakpoint-free column flow ===
- * Columns are added only when a full 16rem track fits, and stretch to fill
- * the row (1fr), so cards shrink smoothly across widths with no abrupt
- * sm/lg column jump. min(100%,16rem) guards against overflow below 16rem. */
+/* === Projects grid: fixed-size cards, columns reduce with width ===
+ * Cards stay a constant 16rem square; the grid adds/removes columns as
+ * viewport width changes (3 → 2 → 1) with no card-size interpolation.
+ * auto-fill preserves empty tracks so cards never stretch to fill a row;
+ * the min(100%,16rem) floor lets a lone card shrink on ultra-narrow screens. */
 .projects-grid {
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 16rem));
+  justify-content: center;
 }
 
 /* === Touch targets (>= 44px) ===

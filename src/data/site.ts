@@ -1,3 +1,9 @@
+import guavaBiReadme from '../../content/projects/guava-bi.md?raw';
+import routineMeReadme from '../../content/projects/routine-me.md?raw';
+import guavaOsReadme from '../../content/projects/guava-os.md?raw';
+import pmladReadme from '../../content/projects/pmlad.md?raw';
+import guavaSiteReadme from '../../content/projects/guava-site.md?raw';
+
 /**
  * Site data model — single source of truth for all content.
  * Edit this file to change copy; components never hardcode text.
@@ -85,11 +91,7 @@ export const site: SiteConfig = {
         subtitle: 'Deterministic analytics behind an LLM trust boundary for ERP-heavy distributors.',
         image: '/case-studies/guava-bi/1.png',
         image2: '/case-studies/guava-bi/2.png',
-        body: `Distributors run on fragmented ERP exports — CSVs of products, inventory, orders, suppliers, and warehouses. Guava BI ingests that operational data, validates it into a canonical PostgreSQL schema, and computes every metric deterministically.
-
-LLMs participate only where they can't corrupt the numbers: parsing intent, suggesting field mappings, and explaining results. They never compute metrics, write SQL, or touch the schema.
-
-Anomaly detection runs in two layers — stockout, overstock, shrinkage, trend reversals — surfaced in a Spotlight feed with full source traceability. 316 backend tests and five Playwright specs gate every merge.`,
+        body: guavaBiReadme,
       },
     },
     {
@@ -104,11 +106,7 @@ Anomaly detection runs in two layers — stockout, overstock, shrinkage, trend r
         subtitle: 'A production AI health tracker where chat and direct input converge on one typed action path.',
         image: '/case-studies/routineme/1.png',
         image2: '/case-studies/routineme/2.png',
-        body: `RoutineMe tracks nutrition, gym, running, habits, and goals from chat or direct input. Both paths converge on one typed Action object routed through one executor into RLS-scoped PostgreSQL mutations.
-
-Chat runs a four-stage server-side flow — classify, normalize, estimate, propose. Only classification and macro estimation touch an LLM; every proposal waits for confirmation before writing.
-
-Identity comes from the Supabase JWT, never the client. RLS scopes all five tables, rate limits guard costly endpoints, and Vitest covers auth, isolation, and the chat flow.`,
+        body: routineMeReadme,
       },
     },
     {
@@ -123,11 +121,7 @@ Identity comes from the Supabase JWT, never the client. RLS scopes all five tabl
         subtitle: 'A control plane for parallel coding agents: dependency graphs, worktree isolation, and review gates.',
         image: '/case-studies/guava-os/1.svg',
         image2: '/case-studies/guava-os/2.svg',
-        body: `guava-os coordinates coding-agent teams like a build system coordinates tasks. A session opens in Chat & Plan, decomposing the problem into a dependency graph of scoped deliverables, not one monolithic prompt.
-
-Agents dispatch in waves — only slices with satisfied dependencies fan out, each in its own worktree. A review gate inspects every diff before merge; nothing ships without passing.
-
-Enforcement is structural. Quality gates, promotion gates, and role boundaries are configured, not requested — unready work is refused. TypeScript, Linear's GraphQL, and OMP carry it.`,
+        body: guavaOsReadme,
       },
     },
     {
@@ -142,11 +136,7 @@ Enforcement is structural. Quality gates, promotion gates, and role boundaries a
         subtitle: 'A multi-tenant property platform with database-level RLS isolation and gated Azure CD.',
         image: '/case-studies/pmlad/1.png',
         image2: '/case-studies/pmlad/2.png',
-        body: `PMLaD gives property managers one system for properties, portfolios, tasks, and inbox — a TypeScript monorepo on Next.js 15, NestJS 10, and Prisma 6, with shared Zod schemas and OpenAPI bindings.
-
-Tenant isolation is load-bearing. Postgres row-level security scopes twelve tenant-owned tables to the caller's organization, enforced by a restricted application role with a crash-on-fail check.
-
-Delivery runs through gated Azure CD — lint, tests, build, and OpenAPI drift checks gate every change. Now in dogfooding, real property workflows exercise it.`,
+        body: pmladReadme,
       },
     },
     {
@@ -161,11 +151,7 @@ Delivery runs through gated Azure CD — lint, tests, build, and OpenAPI drift c
         subtitle: 'The public home for Guava AI — a fast, mostly-static site with automated Playwright QA.',
         image: '/case-studies/guava-site/1.png',
         image2: '/case-studies/guava-site/2.png',
-        body: `guava-site is Guava AI's public face: positioning, product pages, and the workflows built under it. Astro ships static HTML by default, so pages load fast with no framework overhead.
-
-Interactive sections — the capability explorer and 'how we work' visual — are isolated Svelte components; the rest stays plain markup. Tailwind handles the visual system; GSAP motion honors prefers-reduced-motion.
-
-Every branch deploys to Cloudflare Pages, and automated Playwright QA catches regressions before shipping. Boring decisions done carefully: minimal JavaScript, visible content, no animation hiding the message.`,
+        body: guavaSiteReadme,
       },
     },
   ],
