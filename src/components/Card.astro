@@ -16,7 +16,7 @@ export interface Props {
 }
 
 const { caseStudy, caseStudyTitle, class: className = '' } = Astro.props;
-const panelTitle = caseStudy?.title ?? caseStudyTitle ?? 'Case study';
+const panelTitle = caseStudy?.title ?? caseStudyTitle ?? 'Project showcase';
 ---
 
 <article
@@ -31,7 +31,7 @@ const panelTitle = caseStudy?.title ?? caseStudyTitle ?? 'Case study';
       <span
         class:list={['case-status-dot', caseStudy.status]}
         role="img"
-        aria-label={caseStudy.status === 'published' ? 'Case study available' : 'Case study pending'}
+        aria-label={caseStudy.status === 'published' ? 'Project showcase available' : 'Project showcase pending'}
       />
     )
   }
@@ -47,7 +47,7 @@ const panelTitle = caseStudy?.title ?? caseStudyTitle ?? 'Case study';
           aria-haspopup="dialog"
           class="inline-flex h-11 items-center justify-center gap-2 rounded-md px-3 text-sm font-medium text-primary transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
         >
-          <span>Read case study</span>
+          <span>View project showcase</span>
           <svg
             aria-hidden="true"
             viewBox="0 0 24 24"
@@ -71,12 +71,9 @@ const panelTitle = caseStudy?.title ?? caseStudyTitle ?? 'Case study';
     caseStudy && (
       <Panel
         title={panelTitle}
-        eyebrow="Case study"
-        subtitle={caseStudy.subtitle}
+        eyebrow="Project showcase"
         body={caseStudy.body}
-        image={caseStudy.image}
-        image2={caseStudy.image2}
-        imagePlaceholder="Screenshot coming soon"
+        hideTitle
       />
     )
   }
