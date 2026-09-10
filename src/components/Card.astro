@@ -1,91 +1,130 @@
 ---
 import Panel from './Panel.astro';
+import Badge from './Badge.astro';
 
 export interface Props {
+  title: string;
+  /** Card blurb — hard-capped at 60 chars upstream. */
+  blurb: string;
+  /** 2–3 capability tags. */
+  tags: string[];
+  icon?: string;
+  accent?: string;
   caseStudy?: {
     status: 'published' | 'placeholder';
     title?: string;
     subtitle?: string;
     body: string;
     image?: string;
+    imageAlt?: string;
     image2?: string;
+    image2Alt?: string;
   };
-  /** Project title — panel headline falls back to it. */
-  caseStudyTitle?: string;
   class?: string;
 }
 
-const { caseStudy, caseStudyTitle, class: className = '' } = Astro.props;
-const panelTitle = caseStudy?.title ?? caseStudyTitle ?? 'Project showcase';
+/** Inline SVG glyphs keyed by Project.icon (Lucide 24x24, stroke). */
+const ICONS: Record<string, string> = {
+  analytics: '<path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/>',
+  health: '<polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>',
+  terminal: '<polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/>',
+  building:
+    '<rect x="4" y="2" width="16" height="20" rx="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01"/><path d="M16 6h.01"/><path d="M12 6h.01"/><path d="M12 10h.01"/><path d="M12 14h.01"/><path d="M16 10h.01"/><path d="M16 14h.01"/><path d="M8 10h.01"/><path d="M8 14h.01"/>',
+  globe: '<circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/>',
+};
+
+/** Lucide expand glyph — the card affordance in the bottom-right corner. */
+const EXPAND_ICON =
+  '<path d="M21 21v-4.8M21 16.2 15 10" /><path d="M21 7.8V3m0 0h-4.8M21 3l-6 6" /><path d="M3 16.2V21m0 0h4.8M3 21l6-6" /><path d="M3 7.8V3m0 0h4.8M3 3l6 6" />';
+
+const { title, blurb, tags = [], icon, accent, caseStudy, class: className = '' } = Astro.props;
 ---
 
 <article
   class:list={[
-    'relative rounded-xl border border-border bg-card text-card-foreground shadow-inset transition-[transform,box-shadow] duration-200 hover:[transform:translateY(-2px)] hover:shadow-raised flex flex-col project-card',
+    'group relative flex flex-col rounded-xl border border-border bg-card text-card-foreground shadow-inset project-card',
     className,
   ]}
   data-panel-root
+  data-accent={accent}
 >
   {
     caseStudy && (
       <span
         class:list={['case-status-dot', caseStudy.status]}
         role="img"
-        aria-label={caseStudy.status === 'published' ? 'Project showcase available' : 'Project showcase pending'}
+        aria-label={caseStudy.status === 'published' ? 'Case study available' : 'Case study pending'}
       />
     )
   }
-  <div class="flex flex-1 flex-col p-5">
-    <slot />
+  <div class="flex flex-1 flex-col gap-2.5 p-3 sm:p-5">
+    <h3 class="flex items-start gap-2 text-sm sm:text-lg font-semibold leading-tight project-card__title">
+      {icon && ICONS[icon] && (
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="mt-0.5 h-5 w-5 shrink-0 text-primary"
+          set:html={ICONS[icon]}
+        />
+      )}
+      <span>{title}</span>
+    </h3>
+    <p class="text-sm leading-5 text-muted-foreground line-clamp-2 project-card__blurb">{blurb}</p>
+    <div class="hidden sm:flex flex-wrap gap-1.5 project-card__tags">
+      {tags.map((tag) => (
+        <Badge variant="secondary">{tag}</Badge>
+      ))}
+    </div>
   </div>
+
+  <div class="flex justify-end px-3 pb-3 sm:px-5 sm:pb-4" aria-hidden="true">
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.8"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="h-4 w-4 text-primary opacity-70 transition-opacity group-hover:opacity-100"
+      set:html={EXPAND_ICON}
+    />
+  </div>
+
   {
     caseStudy && (
-      <div class="mt-auto flex justify-end px-2.5 py-2">
-        <button
-          type="button"
-          data-panel-open
-          aria-haspopup="dialog"
-          class="inline-flex h-11 items-center justify-center gap-2 rounded-md px-3 text-sm font-medium text-primary transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-        >
-          <span>View project showcase</span>
-          <svg
-            aria-hidden="true"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.8"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="h-4 w-4"
-          >
-            <path d="M21 21v-4.8M21 16.2 15 10" />
-            <path d="M21 7.8V3m0 0h-4.8M21 3l-6 6" />
-            <path d="M3 16.2V21m0 0h4.8M3 21l6-6" />
-            <path d="M3 7.8V3m0 0h4.8M3 3l6 6" />
-          </svg>
-        </button>
-      </div>
+      <button
+        type="button"
+        data-panel-open
+        aria-haspopup="dialog"
+        aria-label={`Open ${title} project`}
+        class="project-card__overlay"
+      />
     )
   }
+
   {
     caseStudy && (
       <Panel
-        title={panelTitle}
-        eyebrow="Project showcase"
+        title={title}
+        subtitle={caseStudy.subtitle}
         body={caseStudy.body}
-        hideTitle
+        image={caseStudy.image}
+        imageAlt={caseStudy.imageAlt}
+        image2={caseStudy.image2}
+        image2Alt={caseStudy.image2Alt}
+        accent={accent}
       />
     )
   }
 </article>
 
 <style>
-  /* Square floor keeps cards from collapsing into squat wide rectangles as
-   * column widths change; grid items grow beyond this if content is taller. */
-  .project-card {
-    aspect-ratio: 1 / 1;
-  }
-
+  /* Green status light, top-right of every card. */
   .case-status-dot {
     position: absolute;
     top: 0.875rem;
@@ -93,6 +132,7 @@ const panelTitle = caseStudy?.title ?? caseStudyTitle ?? 'Project showcase';
     width: 0.5rem;
     height: 0.5rem;
     border-radius: 9999px;
+    z-index: 2;
   }
   .case-status-dot.published {
     background-color: #16a34a;
@@ -101,5 +141,48 @@ const panelTitle = caseStudy?.title ?? caseStudyTitle ?? 'Project showcase';
   .case-status-dot.placeholder {
     background-color: #eab308;
     box-shadow: 0 0 0 3px rgb(234 179 8 / 0.15), 0 0 10px rgb(234 179 8 / 0.55);
+  }
+
+  /* Whole card is clickable; the overlay button covers it while content stays
+   * semantic and readable by screen readers (P0-08). */
+  .project-card__overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    cursor: pointer;
+    border-radius: inherit;
+    background: transparent;
+  }
+  .project-card__overlay:focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+
+  /* One hover treatment: small lift + accent border (P2-02). */
+  .project-card {
+    transition: transform 200ms ease-out, box-shadow 200ms ease-out, border-color 200ms ease-out;
+  }
+  .project-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--ring);
+    box-shadow: var(--shadow-raised);
+  }
+
+  /* Title wraps (no truncation); blurb stays clamped to 2 lines so every card
+   * keeps the same internal rhythm. Grid stretch equalizes row height. */
+  .project-card__title {
+    min-height: 1.25rem;
+  }
+  .project-card__blurb {
+    min-height: 2.5rem; /* 2 × 1.25rem line-height */
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .project-card {
+      transition: none;
+    }
+    .project-card:hover {
+      transform: none;
+    }
   }
 </style>

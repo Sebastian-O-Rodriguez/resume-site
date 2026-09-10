@@ -1,6 +1,9 @@
 /* ==================================================
  * Design tokens (shadcn/ui-style CSS variables)
  * Dark mode via .dark class on <html>
+ *
+ * Surface hierarchy (P2-04): background → card → elevated → toolbar.
+ * Every surface below reads from a token; components never hardcode hex.
  * ================================================== */
 
 @import "tailwindcss" source(none);
@@ -14,7 +17,7 @@
 @theme default {
   --font-sans: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
   --font-serif: "Source Serif 4 Variable", ui-serif, Georgia, serif;
-  /* Card shadows — tint #5C482D (hsl(34 34% 27%)) with alpha */
+  /* Card shadows — tint derived from --shadow-color */
   --shadow-inset: inset 0 1px 2px rgb(92 72 45 / 0.22), inset 0 2px 8px rgb(92 72 45 / 0.12);
   --shadow-raised: 0 4px 8px rgb(92 72 45 / 0.18), 0 10px 24px rgb(92 72 45 / 0.22);
 }
@@ -35,16 +38,32 @@
   --color-accent-foreground: var(--accent-foreground);
   --color-border: var(--border);
   --color-ring: var(--ring);
+  --color-elevated: var(--elevated);
+  --color-toolbar: var(--toolbar);
 }
 
 /* --- Dark mode variant (class-based) --- */
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* --- Type scale (P0-11) ---
+ * Explicit steps used by hero/title/card copy so sizes change with a controlled
+ * clamp, never an accidental wrap-based alignment.
+ */
+:root {
+  --step--2: 0.75rem;   /* card tags, eyebrows */
+  --step--1: 0.8125rem; /* card blurb (mobile) */
+  --step-0: 0.9375rem;  /* body */
+  --step-1: 1.0625rem;  /* card title */
+  --step-2: 1.25rem;    /* section heading */
+  --step-3: clamp(1.5rem, 1.2rem + 1.4vw, 1.875rem); /* page title */
+  --step-4: clamp(2rem, 1.5rem + 2.6vw, 3rem);        /* hero h1 */
+}
+
 /* --- Light / Dark tokens --- */
 :root {
   --background: #FFFFFF;            /* pure white */
   --foreground: #322418;            /* dark brown text */
-  --card: #F5F0E7;                  /* slightly darker than white */
+  --card: #F6F1E8;                  /* slightly darker than white */
   --card-foreground: #322418;
   --primary: #322418;               /* deep brown */
   --primary-foreground: #FFFFFF;
@@ -56,26 +75,31 @@
   --accent-foreground: #322418;
   --border: #D8CDBB;
   --ring: #5C482D;
+  --elevated: #FFFFFF;              /* modal surface */
+  --toolbar: #FBF7F0;               /* sticky navbar / toolbar surface */
   --shadow-color: #5C482D;          /* shadow tint */
   --radius: 0.5rem;
+  color-scheme: light;
 }
 
 .dark {
-  --background: #322418;            /* earth brown */
-  --foreground: #FFFFFF;
-  --card: #3B2C1E;                  /* lighter than page */
-  --card-foreground: #FFFFFF;
-  --primary: #C9A87C;               /* warm tan */
-  --primary-foreground: #322418;
-  --secondary: #3B2B1D;
-  --secondary-foreground: #FFFFFF;
-  --muted: #3B2B1D;
-  --muted-foreground: #A89B89;
-  --accent: #4C3925;
-  --accent-foreground: #FFFFFF;
-  --border: #4C3925;
-  --ring: #C9A87C;
-  --shadow-color: #5C482D;
+  --background: #14100C;            /* darkened below the previous #322418 */
+  --foreground: #F5EFE6;
+  --card: #30281F;                  /* a lighter hue, still warmer than elevated */
+  --card-foreground: #F5EFE6;
+  --primary: #D6B88E;               /* warm tan (brightened for darker bg) */
+  --primary-foreground: #14100C;
+  --secondary: #3E3226;
+  --secondary-foreground: #F5EFE6;
+  --muted: #3A2F23;
+  --muted-foreground: #B4A792;
+  --accent: #45382A;
+  --accent-foreground: #F5EFE6;
+  --border: #45382A;
+  --ring: #D6B88E;
+  --elevated: #3A3025;              /* modal surface, lighter than card */
+  --toolbar: #1C1610;               /* navbar / toolbar surface */
+  --shadow-color: #000000;
   color-scheme: dark;
 }
 
@@ -95,26 +119,125 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Body scroll lock — applied while the mobile menu or a modal is open. */
+body.is-locked {
+  overflow: hidden;
+}
+
 h1, h2, h3, h4 {
   font-family: var(--font-serif);
   font-weight: 600;
   line-height: 1.2;
 }
 
-/* === Projects grid: fixed-size cards, columns reduce with width ===
- * Cards stay a constant 16rem square; the grid adds/removes columns as
- * viewport width changes (3 → 2 → 1) with no card-size interpolation.
- * auto-fill preserves empty tracks so cards never stretch to fill a row;
- * the min(100%,16rem) floor lets a lone card shrink on ultra-narrow screens. */
-.projects-grid {
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 16rem));
-  justify-content: center;
+/* ==================================================
+ * Sticky site header (P0-12/P0-13/P0-14/P0-15)
+ * Transparent at the top; solid toolbar surface once the page scrolls under it.
+ * ================================================== */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: transparent;
+  border-bottom: 1px solid transparent;
+  transition: background-color 180ms ease-out, border-color 180ms ease-out, box-shadow 180ms ease-out;
+}
+.site-header.is-scrolled {
+  background: var(--toolbar);
+  border-bottom-color: var(--border);
+  box-shadow: 0 1px 0 0 var(--border), 0 8px 24px rgb(0 0 0 / 0.06);
 }
 
-/* === Touch targets (>= 44px) ===
- * Header nav links/buttons and the theme toggle use compact heights on
- * desktop (via utility classes); enforce WCAG target size on coarse
- * pointers by raising their minimum size on small screens. */
+/* Desktop nav = inline row; mobile = overlay panel attached to the header. */
+.site-nav {
+  display: flex;
+}
+@media (max-width: 767px) {
+  .site-nav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    display: none;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.25rem;
+    padding: 0.75rem 1rem 1rem;
+    background: var(--toolbar);
+    border-bottom: 1px solid var(--border);
+    box-shadow: 0 12px 24px rgb(0 0 0 / 0.14);
+  }
+  .site-nav.is-open {
+    display: flex;
+  }
+}
+
+/* Hamburger toggle — only shown below the desktop breakpoint. */
+.menu-toggle {
+  display: none;
+}
+@media (max-width: 767px) {
+  .menu-toggle {
+    display: inline-flex;
+  }
+}
+
+/* ==================================================
+ * Projects grid (P0-01/P0-02/P0-03)
+ * Fixed 3 columns on desktop; compact 3-column cards on mobile.
+ * Cards clamp their copy so height never depends on content length.
+ * ================================================== */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.5rem;
+  align-items: stretch;
+}
+@media (max-width: 1023px) {
+  .projects-grid {
+    gap: 1rem;
+  }
+}
+@media (max-width: 640px) {
+  /* Mobile: 2 columns — readability over density (user feedback). */
+  .projects-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+  }
+}
+
+/* ==================================================
+ * Icon-only tooltip (P0-23/P0-24/P0-25)
+ * Shown on hover AND keyboard focus; screen readers get aria-label instead.
+ * ================================================== */
+[data-tooltip] {
+  position: relative;
+}
+[data-tooltip]::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  white-space: nowrap;
+  background: var(--foreground);
+  color: var(--background);
+  font-size: 0.75rem;
+  line-height: 1;
+  padding: 0.375rem 0.5rem;
+  border-radius: 0.25rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 140ms ease-out;
+  z-index: 40;
+}
+[data-tooltip]:hover::after,
+[data-tooltip]:focus-visible::after {
+  opacity: 1;
+}
+
+/* ==================================================
+ * Touch targets (>= 44px) (P2-07)
+ * ================================================== */
 @media (max-width: 640px) {
   header nav a,
   header nav button,
@@ -124,7 +247,72 @@ h1, h2, h3, h4 {
   }
 }
 
-/* === Reduced motion === */
+/* ==================================================
+ * Image lightbox (P0-34/P0-35/P0-36/P0-37)
+ * Global (unscoped) — the dialog is created in JS at runtime.
+ * Desktop = bounded centered frame with page visible around it;
+ * mobile = full-screen. Accent frame via --accent-token.
+ * ================================================== */
+.panel-lightbox {
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  width: min(90vw, 72rem);
+  height: min(84dvh, 52rem);
+  max-width: none;
+  max-height: none;
+  padding: 0;
+  border: 1px solid var(--accent-token, var(--border));
+  border-radius: 0.75rem;
+  background: transparent;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.panel-lightbox::backdrop {
+  background: rgb(0 0 0 / 0.7);
+}
+.panel-lightbox img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+.panel-lightbox-close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  height: 2.75rem;
+  width: 2.75rem;
+  border-radius: 0.375rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #FFFFFF;
+  background: rgb(0 0 0 / 0.4);
+  transition: background-color 150ms ease-out;
+}
+.panel-lightbox-close:hover {
+  background: rgb(0 0 0 / 0.6);
+}
+.panel-lightbox:not([open]) {
+  display: none;
+}
+.panel-lightbox[open] {
+  display: flex;
+}
+@media (max-width: 640px) {
+  .panel-lightbox {
+    width: 100vw;
+    height: 100dvh;
+    border: none;
+    border-radius: 0;
+  }
+}
+
+/* ==================================================
+ * Reduced motion
+ * ================================================== */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -134,7 +322,6 @@ h1, h2, h3, h4 {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-  /* Card hover raise: shadow swaps, no movement */
   .projects-grid > article {
     transform: none !important;
   }

@@ -1,8 +1,8 @@
-import guavaBiReadme from '../../content/projects/guava-bi.md?raw';
-import routineMeReadme from '../../content/projects/routine-me.md?raw';
-import guavaOsReadme from '../../content/projects/guava-os.md?raw';
-import pmladReadme from '../../content/projects/pmlad.md?raw';
-import guavaSiteReadme from '../../content/projects/guava-site.md?raw';
+import guavaBiBody from '../../content/projects/guava-bi.md?raw';
+import routineMeBody from '../../content/projects/routine-me.md?raw';
+import guavaOsBody from '../../content/projects/guava-os.md?raw';
+import pmladBody from '../../content/projects/pmlad.md?raw';
+import guavaAiBody from '../../content/projects/guava-site.md?raw';
 
 /**
  * Site data model — single source of truth for all content.
@@ -11,20 +11,24 @@ import guavaSiteReadme from '../../content/projects/guava-site.md?raw';
 
 export interface Project {
   title: string;
-  description: string;
-  stack: string[];
-  /** Domain icon key — rendered before the card title (see Projects.astro). */
+  /** Card blurb — hard-capped at 60 chars (P0-04). One positioning line. */
+  blurb: string;
+  /** 2–3 high-level capability tags (P0-05), not library names. */
+  tags: string[];
+  /** Domain icon key — rendered before the card title (see Card.astro). */
   icon?: string;
-  /** Outbound link rendered as a CTA at the end of the panel. */
+  /** Subtle accent used by the image viewer frame (P0-35). */
+  accent?: string;
+  /** Outbound link rendered as the article-end CTA (P1-13). */
   href?: string;
   /** CTA label rendered when href is set. */
   cta?: string;
-  /** Panel content opened by the card's expand control. */
+  /** Panel content opened by the card. */
   caseStudy?: CaseStudy;
   draft?: boolean;
 }
 
-/** Structured panel content — one template serves case studies and the resume. */
+/** Structured panel content — one template serves project stories and the resume. */
 export interface CaseStudy {
   /** Draft until the real write-up lands. */
   status: 'published' | 'placeholder';
@@ -34,10 +38,14 @@ export interface CaseStudy {
   subtitle?: string;
   /** Body copy; blank line between paragraphs. */
   body: string;
-  /** Hero image served from /public; a placeholder figure renders when omitted. */
+  /** Hero image served from /public. */
   image?: string;
+  /** Accessible description for the hero image (P0-38). */
+  imageAlt?: string;
   /** Second image rendered below the hero in the panel. */
   image2?: string;
+  /** Accessible description for the second image. */
+  image2Alt?: string;
 }
 
 export interface Link {
@@ -68,7 +76,8 @@ export const site: SiteConfig = {
   brand: 'SOR',
   education: 'Carnegie Mellon University · BS Technology & Sonic Product Innovation, Minor Business Administration (2020)',
   photoPath: '/profile.svg',
-  tagline: 'I build reliable AI systems close to the code — evaluated, guarded, and shipped end-to-end.',
+  tagline: "I like making things, from AI systems and businesses to whatever followed me home from the farmers' market.",
+  blurb: "I'm a founder and builder who ships AI products and the systems that keep them honest. Each project below answers a different question about how I work — start with the one that interests you.",
   resume: {
     title: "Sebastian's Resume",
     download: { href: '/resume.pdf', filename: 'Sebastian-O-Rodriguez-Resume.pdf', label: 'Download Resume (PDF)' },
@@ -80,78 +89,93 @@ export const site: SiteConfig = {
   ],
   projects: [
     {
-      title: 'Guava BI',
-      description: 'Deterministic analytics for ERP-heavy distributors behind an LLM trust boundary — AI proposes, never computes.',
-      stack: ['Python', 'FastAPI', 'Next.js', 'PostgreSQL', 'Polars', 'OpenRouter'],
-      icon: 'analytics',
-      href: 'https://github.com/Sebastian-O-Rodriguez/showcase-guavabi',
-      cta: 'View showcase',
+      title: 'Guava AI',
+      blurb: 'Building AI products around real business problems.',
+      tags: ['Founder', 'Product'],
+      icon: 'globe',
+      accent: '#8AA85C',
+      href: 'https://guavaai.ai',
+      cta: 'Visit Guava AI ↗',
       caseStudy: {
         status: 'published',
-        subtitle: 'Deterministic analytics behind an LLM trust boundary for ERP-heavy distributors.',
-        image: '/case-studies/guava-bi/1.png',
-        image2: '/case-studies/guava-bi/2.png',
-        body: guavaBiReadme,
+        subtitle: 'The company I\u2019m building: practical AI systems for real business problems.',
+        image: '/case-studies/guava-site/1.png',
+        imageAlt: 'Guava AI public homepage',
+        image2: '/case-studies/guava-site/2.png',
+        image2Alt: 'Guava AI positioning and product directions',
+        body: guavaAiBody,
       },
     },
     {
-      title: 'RoutineMe',
-      description: 'Production AI health tracker: user-grounded RAG nutrition estimates, typed actions, and real-model evals.',
-      stack: ['Expo', 'React Native', 'Supabase', 'OpenRouter', 'Zod'],
-      icon: 'health',
-      href: 'https://github.com/Sebastian-O-Rodriguez/showcase-routine-me',
-      cta: 'View showcase',
-      caseStudy: {
-        status: 'published',
-        subtitle: 'A production AI health tracker where chat and direct input converge on one typed action path.',
-        image: '/case-studies/routineme/1.png',
-        image2: '/case-studies/routineme/2.png',
-        body: routineMeReadme,
-      },
-    },
-    {
-      title: 'guava-os',
-      description: 'Control plane for parallel AI coding agents: dependency graphs, worktree isolation, and review gates.',
-      stack: ['TypeScript', 'Linear GraphQL', 'OMP'],
+      title: 'Guava OS',
+      blurb: 'A system for turning plans into controlled execution.',
+      tags: ['Systems', 'AI Agents'],
       icon: 'terminal',
+      accent: '#C9A87C',
       href: '/guava-os',
-      cta: 'Read the full story',
+      cta: 'Read case study →',
       caseStudy: {
         status: 'published',
-        subtitle: 'A control plane for parallel coding agents: dependency graphs, worktree isolation, and review gates.',
+        subtitle: 'A control plane for parallel AI coding agents — and the loop I use to build with them.',
         image: '/case-studies/guava-os/1.svg',
+        imageAlt: 'Guava OS orchestration loop diagram',
         image2: '/case-studies/guava-os/2.svg',
-        body: guavaOsReadme,
+        image2Alt: 'Guava OS task lifecycle diagram',
+        body: guavaOsBody,
+      },
+    },
+    {
+      title: 'Guava BI',
+      blurb: 'Decision intelligence for operations.',
+      tags: ['AI', 'Data Systems'],
+      icon: 'analytics',
+      accent: '#5B9BA0',
+      href: 'https://github.com/Sebastian-O-Rodriguez/showcase-guavabi',
+      cta: 'GitHub ↗',
+      caseStudy: {
+        status: 'published',
+        subtitle: 'Deterministic metrics behind an LLM trust boundary — AI interprets, code computes.',
+        image: '/case-studies/guava-bi/1.png',
+        imageAlt: 'Guava BI Business Pulse dashboard',
+        image2: '/case-studies/guava-bi/2.png',
+        image2Alt: 'Guava BI operational dashboard',
+        body: guavaBiBody,
       },
     },
     {
       title: 'PMLaD',
-      description: 'Multi-tenant property platform with four-layer RLS tenant isolation and gated Azure CD.',
-      stack: ['Next.js', 'NestJS', 'Prisma', 'PostgreSQL 16', 'Azure', 'Clerk'],
+      blurb: 'Property operations in one connected system.',
+      tags: ['Product', 'Full Stack'],
       icon: 'building',
+      accent: '#6A8CAF',
       href: 'https://github.com/Sebastian-O-Rodriguez/showcase-pmlad',
-      cta: 'View showcase',
+      cta: 'GitHub ↗',
       caseStudy: {
         status: 'published',
-        subtitle: 'A multi-tenant property platform with database-level RLS isolation and gated Azure CD.',
+        subtitle: 'A multi-tenant property platform with database-level isolation and gated delivery.',
         image: '/case-studies/pmlad/1.png',
+        imageAlt: 'PMLaD portfolio overview',
         image2: '/case-studies/pmlad/2.png',
-        body: pmladReadme,
+        image2Alt: 'PMLaD operational inbox',
+        body: pmladBody,
       },
     },
     {
-      title: 'guava-site',
-      description: 'Company site on Cloudflare Pages with automated Playwright QA.',
-      stack: ['Astro', 'Svelte', 'Tailwind CSS', 'Cloudflare', 'Playwright'],
-      icon: 'globe',
-      href: 'https://guavaai.ai',
-      cta: 'Visit full site',
+      title: 'RoutineMe',
+      blurb: 'Self-tracking with less logging, more useful history.',
+      tags: ['Product', 'Experiments'],
+      icon: 'health',
+      accent: '#B57A8A',
+      href: 'https://github.com/Sebastian-O-Rodriguez/showcase-routine-me',
+      cta: 'GitHub ↗',
       caseStudy: {
         status: 'published',
-        subtitle: 'The public home for Guava AI — a fast, mostly-static site with automated Playwright QA.',
-        image: '/case-studies/guava-site/1.png',
-        image2: '/case-studies/guava-site/2.png',
-        body: guavaSiteReadme,
+        subtitle: 'A production AI health tracker where chat and direct input converge on one typed path.',
+        image: '/case-studies/routineme/1.png',
+        imageAlt: 'RoutineMe daily tracking view',
+        image2: '/case-studies/routineme/2.png',
+        image2Alt: 'RoutineMe natural-language meal logging',
+        body: routineMeBody,
       },
     },
   ],

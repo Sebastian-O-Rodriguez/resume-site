@@ -11,6 +11,40 @@ The site lives under **two distinct domains** — do not conflate them:
 
 Canonical source of truth: `src/data/site.ts` (`links`) + this section.
 
+## Site surface (launch pass, 2026-09 — GUA-824)
+
+- 5 project cards, fixed order — **Guava AI → Guava OS → Guava BI → PMLaD →
+  RoutineMe**. Whole card clickable; Lucide domain icon in the title row, green
+  status dot top-right, expand glyph bottom-right. Blurb ≤60 chars; capability
+  tags (Founder/Product, Systems/AI Agents, AI/Data Systems, Product/Full
+  Stack, Product/Experiments) shown ≥640px, hidden below.
+- Grid: 3 columns on desktop, 2 on mobile (≤640px). Titles wrap, never
+  truncate; cards equal-height per row.
+- Dark mode: 4-surface token ladder — page `#14100C` → card `#30281F` → modal
+  `#3A3025` → border/accent `#45382A`; toolbar `#1C1610`. Header wordmark uses
+  theme foreground (no tan/yellow in dark).
+- Navbar: sticky; solid toolbar surface once the page scrolls under it;
+  hamburger + overlay menu <768px with body scroll-lock.
+- Expanded project (native `<dialog>`): solid sticky toolbar (theme toggle +
+  close), bounded centered modal on desktop, full-screen on mobile. Article
+  body reads text-left with figures in a right rail on desktop; single column
+  on mobile. Article-end CTA.
+- Articles: one-page stories (~1000 chars), one flow visual each. GitHub ↗ at
+  article end for Guava BI / PMLaD / RoutineMe (`showcase-*` repos). Guava AI →
+  https://guavaai.ai. Guava OS → `/guava-os`.
+- Image lightbox: click any article/hero image; bounded frame on desktop,
+  full-screen on mobile, project accent border, top-right close, Escape/
+  backdrop close.
+- `/guava-os` standalone case study — orchestration-loop narrative; the
+  guava-os repo stays private.
+- Copy rule: "showcase" wording removed site-wide; card blurbs are one-line
+  positioning statements.
+
+QA gate (passed 2026-09): routing direct/refresh/back/forward, cards uniform
+320–1440 with zero clipping or overflow, modal/lightbox open-close on button/
+backdrop/Escape with body unlock, light+dark on every route, keyboard focus +
+visible rings, `astro check` + `astro build` clean.
+
 ## Prerequisites
 
 - [ ] GitHub repo: `Sebastian-O-Rodriguez/resume-site.git` exists and is pushed

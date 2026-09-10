@@ -4,19 +4,33 @@ import { site } from '../data/site';
 const { name, photoPath, tagline, blurb } = site;
 ---
 
-<section class="pt-10 md:pt-14 pb-2" aria-label="Identity">
+<section class="pt-10 md:pt-14 pb-2" aria-label="Introduction">
   <div class="flex flex-col items-center gap-6 text-center md:flex-row md:items-center md:gap-8 md:text-left">
     <img
       src={photoPath}
       alt={`Profile photo of ${name}`}
       width="176"
       height="176"
-      class="h-44 w-44 shrink-0 rounded-full object-cover border border-border shadow-sm"
+      class="h-40 w-40 md:h-44 md:w-44 shrink-0 rounded-full object-cover border border-border shadow-sm"
     />
-    <div class="min-w-0">
-      <h1 class="text-4xl md:text-5xl font-serif font-semibold leading-tight">{name}</h1>
-      <p class="mt-2 text-base md:text-lg text-muted-foreground">{tagline}</p>
-      <p class="mt-3 max-w-2xl text-sm md:text-base leading-relaxed text-foreground/90">{blurb}</p>
+    <div class="min-w-0 max-w-2xl">
+      <h1 class="font-serif font-semibold leading-tight hero-title">{name}</h1>
+      <p class="mt-2 hero-tagline text-muted-foreground">{tagline}</p>
+      <p class="mt-3 hero-blurb leading-relaxed text-foreground/90">{blurb}</p>
     </div>
   </div>
 </section>
+
+<style>
+  /* Controlled clamp scale — desktop/tablet/mobile from one rule (P0-11). */
+  .hero-title {
+    font-size: var(--step-4);
+  }
+  .hero-tagline {
+    font-size: clamp(1.0625rem, 0.9rem + 0.8vw, 1.25rem);
+    line-height: 1.5;
+  }
+  .hero-blurb {
+    font-size: clamp(0.9375rem, 0.875rem + 0.35vw, 1.0625rem);
+  }
+</style>
