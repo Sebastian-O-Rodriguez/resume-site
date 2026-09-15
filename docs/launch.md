@@ -27,8 +27,11 @@ Canonical source of truth: `src/data/site.ts` (`links`) + this section.
   hamburger + overlay menu <768px with body scroll-lock.
 - Expanded project (native `<dialog>`): solid sticky toolbar (theme toggle +
   close), bounded centered modal on desktop, full-screen on mobile. Article
-  body reads text-left with figures in a right rail on desktop; single column
-  on mobile. Article-end CTA.
+  body is one centered ~44rem reading column on desktop; single column on
+  mobile. Mermaid diagrams render client-side, themed from site tokens
+  (re-render on dark/light flip). Article-end CTA buttons open in a new tab
+  (Guava BI / PMLaD / RoutineMe → `showcase-*` repos; Guava AI →
+  https://guavaai.ai; Guava OS → `/guava-os`).
 - Articles: one-page stories (~1000 chars), one flow visual each. GitHub ↗ at
   article end for Guava BI / PMLaD / RoutineMe (`showcase-*` repos). Guava AI →
   https://guavaai.ai. Guava OS → `/guava-os`.
@@ -37,6 +40,10 @@ Canonical source of truth: `src/data/site.ts` (`links`) + this section.
   backdrop close.
 - `/guava-os` standalone case study — orchestration-loop narrative; the
   guava-os repo stays private.
+- Resume: navbar opens the dedicated `/resume` page in a new tab — embedded
+  PDF (`/resume.pdf`) plus Open/Download actions; the old resume panel is
+  removed. PDF builds from `content/resume/resume.md` via `npm run pdf`
+  (pandoc + weasyprint, `scripts/resume.css`).
 - Copy rule: "showcase" wording removed site-wide; card blurbs are one-line
   positioning statements.
 
