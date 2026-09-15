@@ -56,13 +56,56 @@ const { download } = site.resume;
           </div>
         </header>
 
-        <div class="rounded-xl border border-border bg-card overflow-hidden shadow-inset">
-          <iframe
-            src="/resume.pdf#view=FitH"
-            title="Sebastian O Rodriguez Resume (PDF)"
-            class="block w-full h-[72vh] md:h-[80vh]"
-          ></iframe>
-        </div>
+          {/*
+           * Mobile: native iframe PDF embedding is unreliable on mobile browsers
+           * (WebKit renders its own viewer that letterboxes/zooms unpredictably),
+           * so small screens get a simple card with direct links instead of an
+           * embed. Desktop keeps the embedded viewer.
+           */}
+          <div class="rounded-xl border border-border bg-card shadow-inset p-6 md:hidden">
+            <p class="text-sm font-mono text-muted-foreground mb-1">{download.filename}</p>
+            <p class="text-sm text-muted-foreground mb-4">
+              PDF preview works best on a larger screen. Open or download it directly:
+            </p>
+            <div class="flex flex-col gap-2">
+              <Button
+                href={download.href}
+                variant="default"
+                size="sm"
+                attributes={{
+                  'aria-label': 'Open Resume (PDF)',
+                  target: '_self',
+                  'data-track-click': true,
+                  'data-track-event': 'click',
+                  'data-track-label': 'Open Resume (PDF) [mobile]',
+                }}
+              >
+                Open PDF
+              </Button>
+              <Button
+                href={download.href}
+                variant="outline"
+                size="sm"
+                attributes={{
+                  download: download.filename,
+                  'aria-label': download.label,
+                  target: '_self',
+                  'data-track-click': true,
+                  'data-track-event': 'click',
+                  'data-track-label': download.label + ' [mobile]',
+                }}
+              >
+                Download PDF
+              </Button>
+            </div>
+          </div>
+          <div class="hidden rounded-xl border border-border bg-card overflow-hidden shadow-inset md:block">
+            <iframe
+              src="/resume.pdf#view=FitH"
+              title="Sebastian O Rodriguez Resume (PDF)"
+              class="block w-full h-[72vh] md:h-[80vh]"
+            ></iframe>
+          </div>
         <p class="mt-3 text-sm text-muted-foreground">
           PDF not loading in your browser?
           <a href={download.href} download={download.filename} class="text-primary underline underline-offset-4">Download it directly</a>.

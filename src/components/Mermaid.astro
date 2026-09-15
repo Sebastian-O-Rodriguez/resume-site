@@ -38,19 +38,6 @@ const { chart } = Astro.props;
     fill: var(--foreground) !important;
     color: var(--foreground) !important;
   }
-  /* Small screens: wide diagrams keep natural size and scroll horizontally
-   * (like code blocks) instead of shrinking to unreadable text. */
-  @media (max-width: 640px) {
-    .mermaid {
-      justify-content: flex-start;
-    }
-    /* Natural-size width attribute now survives; no inline max-width to fight. */
-    .mermaid :global(svg) {
-      max-width: none;
-      /* Flex items shrink to the container; keep the natural px width. */
-      flex-shrink: 0;
-    }
-  }
 </style>
 
 <script>

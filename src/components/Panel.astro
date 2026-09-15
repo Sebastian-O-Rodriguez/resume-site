@@ -20,6 +20,7 @@ const { title, subtitle, accent } = Astro.props;
   data-panel-dialog
   data-accent={accent}
   aria-label={title}
+  tabindex="-1"
 >
   <div class="panel-toolbar">
     <span class="panel-toolbar__title">{title}</span>
@@ -221,11 +222,13 @@ const { title, subtitle, accent } = Astro.props;
   }
 
   /* CLI screenshots: support the article, not dominate it. Centered, capped
-   * width; regular article images keep full-column width. */
+   * width; regular article images keep full-column width. min() keeps the
+   * desktop cap while clamping to the mobile column so the image never
+   * overflows its container. */
   .panel-body :global(.panel-image--cli) {
     display: block;
     width: auto;
-    max-width: 32rem;
+    max-width: min(32rem, 100%);
     margin: 1rem auto;
   }
 
@@ -422,6 +425,10 @@ const { title, subtitle, accent } = Astro.props;
 
     openBtn?.addEventListener('click', () => {
       dialog.showModal();
+      // Focus the dialog shell, not the first toolbar button: showModal would
+      // otherwise land focus (and the visible focus ring) on the theme toggle.
+      // Tab from the shell still reaches the toolbar first.
+      dialog.focus();
       document.body.classList.add('is-locked');
     });
 
