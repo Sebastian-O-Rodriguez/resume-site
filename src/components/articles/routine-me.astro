@@ -1,0 +1,95 @@
+---
+/**
+ * Short-form panel article: RoutineMe.
+ * Thesis (editorial guidance, not rendered): AI is useful where human intent is fuzzy; deterministic software should take over once that intent becomes structured.
+ */
+import Mermaid from '../Mermaid.astro';
+---
+
+<h2>Why I Built It</h2>
+
+<p>
+  I tracked my meals with MyFitnessPal for more than a year. It worked, but accurate logging was tedious. A basic chicken-and-broccoli dinner meant weighing several ingredients, finding the correct entries, entering quantities, and checking the result.
+</p>
+
+<p>
+  Even after I got faster, logging each meal took 5–7 minutes. At 3 meals a day, that can add up to roughly 90 hours a year.
+</p>
+
+<p>
+  I wanted to reduce that to less than 1 minute per meal without giving up useful accuracy. I build software for a living, so I built RoutineMe.
+</p>
+
+<figure class="panel-figure">
+  <img
+    class="panel-image"
+    src="/case-studies/routineme/1.png"
+    alt="RoutineMe daily tracking view"
+    loading="lazy"
+  />
+</figure>
+
+<h2>Rethinking Meal Logging</h2>
+
+<p>
+  The core product decision was simple: spend less time entering data and more time using it.
+</p>
+
+<p>
+  RoutineMe lets me log food the way I naturally think about it. I can enter an exact weight when I have one, describe something loosely, or use an image when that’s easier. The system turns that input into a structured entry that I can review before saving.
+</p>
+
+<p>
+  It also uses previously confirmed entries as context. If I eat the same food again, RoutineMe can reuse what it already knows instead of starting from scratch.
+</p>
+
+<p>
+  Once meals are stored consistently, the history becomes more useful. I can quickly see what I have been eating and, over time, ask better questions about patterns, habits, and gaps in my diet. The goal is to make tracking feel less like data entry and more like a tool for staying consistent.
+</p>
+
+<figure class="panel-figure">
+  <img
+    class="panel-image"
+    src="/case-studies/routineme/2.png"
+    alt="RoutineMe natural-language meal logging"
+    loading="lazy"
+  />
+</figure>
+
+<h2>Where AI Stops</h2>
+
+<p>
+  The most important engineering decision was deciding how much authority to give the model. I use AI to interpret ambiguous input, then hand the result to deterministic application code.
+</p>
+
+<Mermaid
+  chart={`flowchart LR
+    A["Loose input"] --> B["Interpret"]
+    B --> C["Proposal"]
+    C --> D["Confirm"]
+    D --> E["Deterministic write"]`}
+/>
+
+<p>
+  The model never gets arbitrary control over application state. I define the boundary with TypeScript and Zod schemas, then route state changes through a typed action path. The AI handles the probabilistic problem; application code handles validation and execution.
+</p>
+
+<p>
+  This separation makes the system easier to test, debug, and change. I can evaluate model behavior independently, validate actions before execution, and swap models or prompts without rewriting the application’s core rules. It also avoids spending tokens on work that ordinary code can perform faster and more predictably.
+</p>
+
+<h2>What I Learned</h2>
+
+<p>
+  RoutineMe changed how I think about human-AI interaction. <strong>Natural language can be an input method without turning the product into a chatbot.</strong>
+</p>
+
+<p>
+  The model can absorb ambiguity, translate it into something the software understands, and then get out of the way. That has become a useful rule for how I build AI systems: <strong>use models where judgment is valuable; use deterministic software where the rules are known.</strong>
+</p>
+
+<p>
+  <a class="button" href="https://github.com/Sebastian-O-Rodriguez/showcase-routine-me">
+    Explore RoutineMe on GitHub →
+  </a>
+</p>

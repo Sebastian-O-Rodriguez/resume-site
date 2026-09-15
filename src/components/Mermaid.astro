@@ -1,0 +1,147 @@
+---
+/**
+ * Client-rendered Mermaid diagram.
+ * Source is passed as a prop (never parsed as template text) and stashed in a
+ * data attribute so the diagram can re-render when the site theme flips.
+ * The mermaid bundle is dynamically imported: pages without diagrams pay nothing.
+ */
+
+export interface Props {
+  /** Mermaid diagram source (flowchart, sequence, etc.). */
+  chart: string;
+}
+const { chart } = Astro.props;
+---
+
+<pre class="mermaid" data-mermaid-source={chart}>{chart}</pre>
+
+<style>
+  .mermaid {
+    display: flex;
+    justify-content: center;
+    margin: 1.25rem 0;
+    overflow-x: auto;
+    background: none;
+    padding: 0;
+  }
+  /* Responsive: shrink to the column, keep aspect ratio. */
+  .mermaid :global(svg) {
+    max-width: 100%;
+    height: auto;
+  }
+  /* Edge label text (branch labels): mermaid's injected SVG styles use ID
+   * selectors, so !important + site tokens win. Contrast tracks --foreground
+   * in both themes; label backgrounds stay on --elevated. */
+  .mermaid :global(.edgeLabel span),
+  .mermaid :global(.edgeLabel p),
+  .mermaid :global(.edgeLabel text) {
+    fill: var(--foreground) !important;
+    color: var(--foreground) !important;
+  }
+  /* Small screens: wide diagrams keep natural size and scroll horizontally
+   * (like code blocks) instead of shrinking to unreadable text. */
+  @media (max-width: 640px) {
+    .mermaid {
+      justify-content: flex-start;
+    }
+    /* Natural-size width attribute now survives; no inline max-width to fight. */
+    .mermaid :global(svg) {
+      max-width: none;
+      /* Flex items shrink to the container; keep the natural px width. */
+      flex-shrink: 0;
+    }
+  }
+</style>
+
+<script>
+  /**
+   * Mermaid measures text in the live DOM, so diagrams inside a closed
+   * <dialog> (display:none) render empty. Render only visible diagrams;
+   * panel diagrams render when their dialog opens. Each rendered node records
+   * the theme it was rendered with; a theme flip re-renders visible diagrams
+   * now and lets hidden panels refresh on their next open.
+   */
+  function currentTheme() {
+    return document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+  }
+  let mermaidPromise: Promise<typeof import('mermaid').default> | undefined;
+  function getMermaid() {
+    mermaidPromise ??= import('mermaid').then((m) => m.default);
+    return mermaidPromise;
+  }
+
+  /** Site-token palette: light mode = dark nodes with light text; dark mode the reverse. */
+  function themeVariables() {
+    const root = getComputedStyle(document.documentElement);
+    const token = (name: string) => root.getPropertyValue(name).trim();
+    return {
+      fontSize: '14px',
+      primaryColor: token('--primary'),
+      primaryTextColor: token('--primary-foreground'),
+      primaryBorderColor: token('--ring'),
+      lineColor: token('--muted-foreground'),
+      secondaryColor: token('--secondary'),
+      secondaryTextColor: token('--secondary-foreground'),
+      secondaryBorderColor: token('--border'),
+      tertiaryColor: token('--card'),
+      tertiaryTextColor: token('--foreground'),
+      edgeLabelBackground: token('--elevated'),
+      clusterBkg: token('--card'),
+      clusterBorder: token('--border'),
+      noteBkgColor: token('--secondary'),
+      noteTextColor: token('--secondary-foreground'),
+      noteBorderColor: token('--border'),
+    };
+  }
+
+  async function render(nodes: HTMLElement[]) {
+    if (nodes.length === 0) return;
+    const mermaid = await getMermaid();
+    // 'base' + token-derived themeVariables replaces Mermaid's default purple.
+    // Natural pixel size, no inline max-width: the CSS below owns scaling.
+    mermaid.initialize({
+      startOnLoad: false,
+      theme: 'base',
+      themeVariables: themeVariables(),
+      flowchart: { useMaxWidth: false },
+    });
+    nodes.forEach((el) => {
+      el.removeAttribute('data-processed');
+      el.textContent = el.dataset.mermaidSource || el.textContent || '';
+    });
+    await mermaid.run({ nodes });
+    nodes.forEach((el) => (el.dataset.mermaidTheme = currentTheme()));
+  }
+
+  /** Diagrams in scope whose rendered theme is stale (or never rendered). */
+  function stale(scope: ParentNode) {
+    return Array.from(scope.querySelectorAll<HTMLElement>('pre.mermaid')).filter(
+      (el) => el.dataset.mermaidTheme !== currentTheme()
+    );
+  }
+
+  /** Visible now = not inside a closed dialog. */
+  function visible(nodes: HTMLElement[]) {
+    return nodes.filter((el) => !el.closest('dialog:not([open])'));
+  }
+
+  render(visible(stale(document)));
+
+  // Panel open: render that dialog's diagrams (first open, or after a theme flip).
+  document.querySelectorAll('dialog').forEach((dialog) => {
+    new MutationObserver(() => {
+      if (dialog.hasAttribute('open')) render(stale(dialog));
+    }).observe(dialog, { attributes: true, attributeFilter: ['open'] });
+  });
+
+  // Theme flip (dark class on <html>): re-render what is currently visible.
+  let queued = false;
+  new MutationObserver(() => {
+    if (queued) return;
+    queued = true;
+    queueMicrotask(() => {
+      queued = false;
+      render(visible(stale(document)));
+    });
+  }).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+</script>

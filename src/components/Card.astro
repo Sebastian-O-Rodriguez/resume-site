@@ -14,11 +14,6 @@ export interface Props {
     status: 'published' | 'placeholder';
     title?: string;
     subtitle?: string;
-    body: string;
-    image?: string;
-    imageAlt?: string;
-    image2?: string;
-    image2Alt?: string;
   };
   class?: string;
 }
@@ -107,18 +102,15 @@ const { title, blurb, tags = [], icon, accent, caseStudy, class: className = '' 
     )
   }
 
-  {
-    caseStudy && (
+    {
+      caseStudy && (
       <Panel
         title={title}
         subtitle={caseStudy.subtitle}
-        body={caseStudy.body}
-        image={caseStudy.image}
-        imageAlt={caseStudy.imageAlt}
-        image2={caseStudy.image2}
-        image2Alt={caseStudy.image2Alt}
         accent={accent}
-      />
+      >
+        <slot />
+      </Panel>
     )
   }
 </article>

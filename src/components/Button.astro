@@ -17,6 +17,10 @@ const {
   ...rest
 } = Astro.props;
 
+/** External/tabbed links open a new tab by default; callers may override via attributes.target. */
+const target = (attributes.target as string | undefined) ?? (href ? '_blank' : undefined);
+const rel = target === '_blank' ? 'noopener noreferrer' : undefined;
+
 const base = 'inline-flex items-center justify-center font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50';
 
 const variants: Record<string, string> = {
@@ -36,7 +40,7 @@ const cls = `${base} ${variants[variant]} ${sizes[size]} ${className}`;
 
 {
   href ? (
-    <a href={href} class={cls} target="_blank" rel="noopener noreferrer" {...attributes} {...rest}>
+    <a href={href} class={cls} target={target} rel={rel} {...attributes} {...rest}>
       <slot />
     </a>
   ) : (

@@ -1,0 +1,38 @@
+---
+/**
+
+Short-form panel article: Guava OS.
+Distinct from the long-form /guava-os page.
+Thesis (editorial guidance, not rendered): More agent autonomy increases the importance of the harness around the agent.
+*/
+---
+
+<h2>The Model Is Only Part of the System</h2>
+
+<p> Coding agents are good at bounded implementation tasks. The problem changes when I ask them to do substantial work autonomously. Tasks depend on one another. Workers need different context. Parallel changes can collide. Finished code still needs to be verified before it moves forward. </p>
+
+<p> At that point, improving the prompt is not enough. The engineering problem moves into the system around the agent. </p>
+
+<figure class="panel-figure"> <img class="panel-image panel-image--cli" src="/case-studies/guava-os/1.svg" alt="Guava OS orchestration loop diagram" loading="lazy" /> </figure>
+
+<h2>Build the Harness</h2>
+
+<p> I built Guava OS to control that surrounding system. Work starts with a deliberate plan, decomposes into bounded tasks with explicit dependencies, then fans out to isolated workers with the context and skills required for each task. </p>
+
+<p> The objective is not maximum parallelism. It is safe parallelism. Independent work can run concurrently while dependencies, ownership, and state remain explicit. </p>
+
+<h2>Separate Execution From Authority</h2>
+
+<p> An agent finishing a task does not make the task complete. Guava OS sends work through deterministic checks and review before it can be promoted. The worker that writes the code does not decide whether that code should ship. </p>
+
+<p> That separation lets me increase execution autonomy without giving agents unrestricted delivery authority. </p>
+
+<figure class="panel-figure"> <img class="panel-image panel-image--cli" src="/case-studies/guava-os/2.svg" alt="Guava OS task lifecycle diagram" loading="lazy" /> </figure>
+
+<h2>What I Learned</h2>
+
+<p> More capable agents do not reduce the need for engineering controls. They increase it. As execution becomes more autonomous, planning, context, isolation, validation, and promotion become more important. </p>
+
+<p> <strong>The more autonomy I give the agent, the stronger I want the system around it to be.</strong> </p>
+
+<p> <a class="button" href="/guava-os"> Read the Full Guava OS Article → </a> </p>

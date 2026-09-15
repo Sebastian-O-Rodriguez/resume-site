@@ -1,0 +1,63 @@
+---
+
+/**
+
+Short-form panel article: Guava BI.
+Thesis (editorial guidance, not rendered): AI can make data easier to interrogate without becoming the source of truth.
+*/
+import Mermaid from '../Mermaid.astro';
+---
+
+<h2>Same Problem, Different Businesses</h2>
+
+<p> At Guava AI, I worked with businesses across food service, insurance, financing, manufacturing, and distribution. <strong>Different industries, same problem: plenty of data with no easy way to understand it.</strong> </p>
+
+<p> Their data lived across ERPs, POS systems, spreadsheets, databases, and manual processes. Reporting often depended on SQL, limited dashboards, or manual reconciliation. The result was stale information, repetitive work, and a growing gap between what was happening in the business and what decision-makers could see. </p>
+
+<p> Much of my work involved connecting those systems and improving their data pipelines. That solved part of the problem, but another bottleneck remained. People still needed a better way to explore and understand the data. Guava BI grew out of that work. </p>
+
+<figure class="panel-figure"> <img class="panel-image" src="/case-studies/guava-bi/1.png" alt="Guava BI Business Pulse dashboard" loading="lazy" /> </figure>
+
+<h2>Make the Data Easier to Use</h2>
+
+<p> Better pipelines do not automatically produce better decisions. People still need to find the right dashboard, understand its structure, and know which dimensions or metrics will answer their questions. </p>
+
+<p> Natural language offers a more flexible interface. A manager should be able to ask, “What inventory needs attention this week?” without knowing where the data lives or how the reporting system represents it. </p>
+
+<p> That creates a harder engineering question. <strong>How do you make the interface flexible without making the numbers probabilistic?</strong> </p>
+
+<h2>Separate Meaning From Math</h2>
+
+<p> Guava BI separates interpretation from calculation. </p>
+
+<Mermaid
+  chart={`flowchart LR
+    A["Data"] --> B["Profile"]
+    B --> C["Interpret"]
+    C --> D["Validate"]
+    D --> E["Model"]
+    E --> F["Compute"]
+    F --> G["Interfaces"]`}
+/>
+
+<p> AI handles the ambiguous work. It interprets unfamiliar schemas, maps fields to business concepts, and determines what a user is asking. The system validates those interpretations before they reach the analytical layer. </p>
+
+<p> Once the meaning is established, code takes over. It calculates metrics, trends, and operational signals deterministically while preserving a traceable path back to the source data. </p>
+
+<figure class="panel-figure"> <img class="panel-image" src="/case-studies/guava-bi/2.png" alt="Guava BI operational dashboard" loading="lazy" /> </figure>
+
+<h2>One System, Multiple Interfaces</h2>
+
+<p> Dashboards, conversational analysis, and recommendations all draw from the same analytical layer. Natural language does not create a second source of truth. It provides another way to interrogate the existing one. </p>
+
+<p> The model interprets the question. The application supplies the numbers. </p>
+
+<h2>What I Learned</h2>
+
+<p> Guava BI reinforced an idea that now shapes how I build AI systems. Uncertainty at the interface does not require uncertainty throughout the system. </p>
+
+<p> Models are useful when meaning requires judgment. Once the meaning is clear, deterministic software should enforce the rules. </p>
+
+<p> For Guava BI, the principle is simple: <strong>AI interprets, code calculates.</strong> </p>
+
+<p> <a class="button" href="https://github.com/Sebastian-O-Rodriguez/showcase-guavabi"> Explore Guava BI on GitHub → </a> </p>

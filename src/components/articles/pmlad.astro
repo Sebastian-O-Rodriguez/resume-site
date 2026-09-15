@@ -1,0 +1,60 @@
+---
+/**
+
+Short-form panel article: PMLaD.
+Thesis (editorial guidance, not rendered): Useful automation starts with accurately modeling the operation underneath it.
+*/
+import Mermaid from '../Mermaid.astro';
+---
+
+<h2>Model the Operation</h2>
+
+<p> I built PMLaD around one principle: <strong>model the operation first, then build the interface around it.</strong> Property management is a network of connected workflows: Owners, managers, tenants, leases, payments, maintenance, contractors, expenses, and recurring work all affect one another. </p>
+
+<p> When those workflows live across spreadsheets, messages, email, and separate tools, context breaks apart. A maintenance request loses its connection to the tenant who reported it. A payment needs to be reconciled with a lease. A repair becomes an expense that affects property performance. </p>
+
+<figure class="panel-figure"> <img class="panel-image" src="/case-studies/pmlad/1.png" alt="PMLaD portfolio overview" loading="lazy" /> </figure>
+
+<h2>Keep Context Connected</h2>
+
+<p> PMLaD connects workflows through a shared domain model. Properties contain units. Units connect to tenants and leases. Maintenance creates work, costs, and history. Payments affect balances. Tasks and expenses feed into property performance. </p>
+
+<p> These relationships matter more than any individual screen. Once the system understands how the pieces connect, information can move through the operation without being repeatedly copied or reconstructed. </p>
+
+<Mermaid
+  chart={`flowchart LR
+    A["Property"] --> B["Units"]
+    B --> C["Tenants"]
+    A --> D["Maintenance"]
+    D --> E["Tasks & Costs"]
+    C --> F["Payments"]
+    E --> G["Performance"]
+    F --> G
+    G --> H["Portfolio"]`}
+/>
+
+<h2>Make Authority Structural</h2>
+
+<p> Connecting the operation creates another requirement. Not everyone should see or control everything. </p>
+
+<p> Owners, managers, tenants, and field workers share the system with different responsibilities. PMLaD treats those boundaries as architecture, not interface logic. </p>
+
+<p> PostgreSQL Row Level Security enforces tenant isolation close to the data. Access depends on the actor, their scope, and the action they are attempting. The application builds workflows on top of those rules instead of carrying the full burden of enforcing them. </p>
+
+<figure class="panel-figure"> <img class="panel-image" src="/case-studies/pmlad/2.png" alt="PMLaD operational inbox" loading="lazy" /> </figure>
+
+<h2>Earn the Automation</h2>
+
+<p> Automation becomes useful when the underlying system already knows what exists, how entities relate, who has authority, and where each workflow stands. </p>
+
+<p> AI can classify a maintenance request, summarize activity, or recommend a next action. It cannot compensate for a system that does not reliably know which tenant, unit, property, or workflow that action belongs to. </p>
+
+<p> <strong>The quality of the automation depends on the quality of the software underneath it.</strong> </p>
+
+<h2>What I Learned</h2>
+
+<p> PMLaD reinforced the value of modeling the domain before optimizing individual workflows. Good abstractions preserve context. Strong authorization creates safe boundaries. Connected data creates leverage. </p>
+
+<p> Before making a system intelligent, make sure it understands the operation. </p>
+
+<p> <a class="button" href="https://github.com/Sebastian-O-Rodriguez/showcase-pmlad"> Explore PMLaD on GitHub → </a> </p>

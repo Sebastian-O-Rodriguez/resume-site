@@ -2,89 +2,201 @@
 import Layout from '../layouts/Layout.astro';
 import Container from '../components/Container.astro';
 import Badge from '../components/Badge.astro';
+import Mermaid from '../components/Mermaid.astro';
 ---
+<Layout title="Building with Guava OS"> <Container> <article class="py-12 md:py-16"> <div class="mx-auto max-w-3xl"> <header class="mb-10"> <p class="text-sm font-mono text-muted-foreground mb-3">Case study · Guava OS</p> <h1 class="text-3xl md:text-4xl font-serif font-semibold leading-tight"> A Control Plane for Agents, and the Loop I Use to Build With Them </h1> <p class="mt-4 text-base md:text-lg text-muted-foreground leading-relaxed"> Guava OS is the system I use to plan, dispatch, validate, and improve work across parallel AI coding agents. It started as a workflow I kept repeating by hand until the repetition became a system. </p> </header>
 
-<Layout title="Building with Guava OS">
-  <Container>
-    <article class="py-12 md:py-16">
-      <div class="mx-auto max-w-3xl">
-        <header class="mb-10">
-          <p class="text-sm font-mono text-muted-foreground mb-3">Case study · Guava OS</p>
-          <h1 class="text-3xl md:text-4xl font-serif font-semibold leading-tight">
-            A control plane for agents, and the loop I use to build with them
-          </h1>
-          <p class="mt-4 text-base md:text-lg text-muted-foreground leading-relaxed">
-            Guava OS is how I orchestrate parallel AI coding agents. It didn't start as a product — it
-            started as a loop I kept repeating by hand until the repetition begged to be codified.
-          </p>
-        </header>
+    <div class="space-y-12 text-sm md:text-base leading-relaxed text-foreground/90">
 
-        <div class="space-y-12 text-sm md:text-base leading-relaxed text-foreground/90">
-          <section data-reveal>
-            <h2 class="text-xl md:text-2xl font-serif font-semibold mb-4">Chat &amp; plan is the core loop</h2>
-            <p class="mb-4 text-muted-foreground">
-              Every piece of work starts as a conversation, and the first artifact is never code — it's a
-              plan. I describe a goal in plain language, then push on it until it decomposes into scoped,
-              verifiable units. This is where I separate <em>what</em> from <em>how</em>, and where I name
-              the contracts between pieces before anyone touches a file.
-            </p>
-            <p class="text-muted-foreground">
-              Planning is the step that compounds. A plan that names its boundaries and its acceptance
-              criteria makes the next three steps boring — and boring is the point. The loop is short:
-              chat to a plan, plan to dispatched work, work to a gate, gate back to chat. Most of the real
-              thinking lives in the first turn and the last one; the middle should run itself.
-            </p>
-          </section>
+      <section data-reveal>
+        <h2 class="text-xl md:text-2xl font-serif font-semibold mb-4">Plan Before Execution</h2>
 
-          <section data-reveal>
-            <h2 class="text-xl md:text-2xl font-serif font-semibold mb-4">Dispatching work to agents</h2>
-            <p class="mb-4 text-muted-foreground">
-              Once the plan exists, its units fan out to workers. Each worker gets a self-contained brief:
-              the files it owns, the pattern it should follow, and the acceptance it has to meet. Isolation
-              is the whole point — agents that never touch the same file can run in parallel without
-              colliding. Dependencies become explicit edges, so a unit only starts when its upstream has
-              landed.
-            </p>
-            <p class="text-muted-foreground">
-              What I don't do is hand an agent a blank page and hope. A worker with no context invents
-              context, and invented context produces confident, wrong work. So the dispatch step carries
-              the shape of the problem, not just the task. The harder the job, the more of my own judgment
-              gets folded into the brief before it goes out.
-            </p>
-          </section>
+        <p class="mb-4 text-muted-foreground">
+          Every substantial piece of work starts with a conversation. The first artifact is not code. It is a plan.
+        </p>
 
-          <section data-reveal>
-            <h2 class="text-xl md:text-2xl font-serif font-semibold mb-4">Gates and enforcement</h2>
-            <p class="mb-4 text-muted-foreground">
-              Parallelism is only as safe as the gate that reviews its output. Every change comes back
-              through a review that reads the diff and checks it against the plan that spawned it — did the
-              work do what the issue asked, and did it respect the conventions it was handed? A gate
-              authorizes the merge; the worker that wrote the code doesn't. Nothing lands on a shared
-              branch until it passes, and no worker ever merges toward production on its own.
-            </p>
-            <p class="text-muted-foreground">
-              The gates are what make the loop trustworthy enough to run unattended. Speed without them is
-              just a faster way to break a shared branch. With them, I can let a dozen agents run while I
-              do the only part a human should: decide what's worth building, and judge whether what came
-              back is actually good.
-            </p>
-          </section>
+        <p class="mb-4 text-muted-foreground">
+          I define the outcome, constraints, dependencies, and acceptance criteria before dispatching anything. This separates two questions that agents often collapse: <strong>what should happen, and how should it be implemented?</strong>
+        </p>
 
-          <section data-reveal>
-            <h2 class="text-xl md:text-2xl font-serif font-semibold mb-4">Stack notes</h2>
-            <p class="mb-4 text-muted-foreground">
-              The system is TypeScript end to end — one language from orchestration to worker runtime keeps
-              the contract surface small. Work lives in Linear, and its GraphQL API is the source of truth:
-              issues are the state of record, comments carry the trail, and statuses drive the gates.
-            </p>
-            <div class="flex flex-wrap gap-2">
-              <Badge variant="secondary">TypeScript</Badge>
-              <Badge variant="secondary">Linear GraphQL</Badge>
-              <Badge variant="secondary">OMP</Badge>
-            </div>
-          </section>
+        <p class="text-muted-foreground">
+          Once approved, the plan becomes durable project state. The goal is simple: make the decisions before execution so the execution itself can become boring.
+        </p>
+<Mermaid
+          chart={`flowchart LR
+    A["Chat"] --> B["Plan"]
+    B --> C["Decompose"]
+    C --> D["Dispatch"]
+    D --> E["Execute"]
+    E --> F["Validate"]
+    F --> G["Review"]
+    G --> H["Promote"]
+    G --> A`}
+        />
+      </section>
+
+      <section data-reveal>
+        <h2 class="text-xl md:text-2xl font-serif font-semibold mb-4">Turn Plans Into Bounded Work</h2>
+
+        <p class="mb-4 text-muted-foreground">
+          Guava OS decomposes a plan into scoped tasks with explicit dependencies. Independent tasks can run in parallel. Dependent work waits until its prerequisites are complete.
+        </p>
+
+        <p class="mb-4 text-muted-foreground">
+          Each worker receives more than an issue title. It gets the task, relevant repository context, applicable skills, constraints, and a definition of done.
+        </p>
+
+        <p class="text-muted-foreground">
+          Agents fill gaps. Give one an underspecified task and it will invent the missing assumptions. The unit of delegation is therefore not just a task. It is <strong>the task plus the context required to execute it correctly.</strong>
+        </p>
+      </section>
+
+      <section data-reveal>
+        <h2 class="text-xl md:text-2xl font-serif font-semibold mb-4">Make Parallelism Safe</h2>
+
+        <p class="mb-4 text-muted-foreground">
+          Parallel agents create a shared-state problem. If several workers modify the same environment, speed quickly turns into collisions and difficult reviews.
+        </p>
+
+        <p class="mb-4 text-muted-foreground">
+          Guava OS isolates work so agents can execute independently. The dependency graph determines what can run concurrently and what must wait.
+        </p>
+
+        <p class="text-muted-foreground">
+          The objective is not maximum parallelism. It is <strong>safe parallelism.</strong> Running more agents only helps when ownership, dependencies, and promotion rules remain clear.
+        </p>
+      </section>
+
+      <section data-reveal>
+        <h2 class="text-xl md:text-2xl font-serif font-semibold mb-4">Give Agents the Right Context</h2>
+
+        <p class="mb-4 text-muted-foreground">
+          Model capability is only part of agent performance. The surrounding context determines how effectively that capability gets applied.
+        </p>
+
+        <p class="mb-4 text-muted-foreground">
+          A database migration, frontend component, test suite, and deployment change should not receive identical instructions. Guava OS can attach task-specific skills and context before execution.
+        </p>
+
+        <p class="text-muted-foreground">
+          The model provides general reasoning and implementation ability. The harness provides local knowledge: repository conventions, architectural decisions, tools, constraints, and validation requirements.
+        </p>
+      </section>
+
+      <section data-reveal>
+        <h2 class="text-xl md:text-2xl font-serif font-semibold mb-4">Use Models for Judgment, Code for Rules</h2>
+
+        <p class="mb-4 text-muted-foreground">
+          If I can express a requirement deterministically, I would rather encode it once than ask a model to remember it on every run.
+        </p>
+
+        <p class="mb-4 text-muted-foreground">
+          Guava OS surrounds probabilistic workers with deterministic controls. Hooks load required context. Tests, type checks, formatting, and structural checks catch predictable failures. Repository rules control what can move forward.
+        </p>
+
+        <p class="text-muted-foreground">
+          The division is deliberate: <strong>models handle judgment and implementation; code enforces invariants.</strong>
+        </p>
+<Mermaid
+          chart={`flowchart TD
+    A["Output"] --> B["Checks"]
+    B -->|Fail| C["Fix"]
+    B -->|Pass| D["Review"]
+    D -->|Reject| C
+    D -->|Approve| E["Promote"]`}
+        />
+      </section>
+
+      <section data-reveal>
+        <h2 class="text-xl md:text-2xl font-serif font-semibold mb-4">Separate Execution From Authority</h2>
+
+        <p class="mb-4 text-muted-foreground">
+          An agent finishing a task does not make the task complete. The worker that writes the code does not decide whether that code should ship.
+        </p>
+
+        <p class="mb-4 text-muted-foreground">
+          Completed work moves through deterministic checks and review before promotion. The system can verify the diff against the task, catch known failure modes, and require approval where judgment still matters.
+        </p>
+
+        <p class="text-muted-foreground">
+          This separation lets me increase execution autonomy without giving agents unrestricted delivery authority. <strong>More autonomy requires stronger controls around what happens next.</strong>
+        </p>
+      </section>
+
+      <section data-reveal>
+        <h2 class="text-xl md:text-2xl font-serif font-semibold mb-4">Make the Work Visible</h2>
+
+        <p class="mb-4 text-muted-foreground">
+          Autonomous work becomes difficult to manage when its state disappears inside terminals and chat sessions. A control plane should make it obvious what is running, blocked, failed, or waiting for review.
+        </p>
+
+        <p class="text-muted-foreground">
+          Guava OS keeps plans, tasks, dependencies, status changes, validation results, and handoffs in durable project state. Today, Linear provides much of that state. Issues represent work, dependencies describe sequencing, comments preserve the execution trail, and statuses help drive workflow transitions.
+        </p>
+      </section>
+
+      <section data-reveal>
+        <h2 class="text-xl md:text-2xl font-serif font-semibold mb-4">Turn Friction Into Infrastructure</h2>
+
+        <p class="mb-4 text-muted-foreground">
+          Repeated failures are signals. If I keep correcting the same problem, the harness is missing something.
+        </p>
+
+        <p class="mb-4 text-muted-foreground">
+          A recurring correction can become a skill, hook, validation check, stronger task template, or better context. Instead of remembering the lesson myself, I move it into the system.
+        </p>
+<Mermaid
+          chart={`flowchart LR
+    A["Execution"] --> B["Friction"]
+    B --> C["Review"]
+    C --> D["Skill, hook, or rule"]
+    D --> A`}
+        />
+        <p class="text-muted-foreground">
+          Each project can therefore improve both the software being built and the system that builds the next project.
+        </p>
+      </section>
+
+      <section data-reveal>
+        <h2 class="text-xl md:text-2xl font-serif font-semibold mb-4">The Control Plane Is the Product</h2>
+
+        <p class="mb-4 text-muted-foreground">
+          Guava OS currently exposes much of this workflow through developer tooling, but the interface is not the important part.
+        </p>
+
+        <p class="mb-4 text-muted-foreground">
+          The system is the combination of durable planning, bounded delegation, dependency-aware execution, context injection, deterministic controls, visible state, validation, and explicit promotion authority.
+        </p>
+
+        <p class="mb-4 text-muted-foreground">
+          The direction is progressively more autonomous execution with clear boundaries around validation and production. Agents can take on more implementation, testing, debugging, and coordination while the control plane governs how that work moves forward.
+        </p>
+
+        <p class="text-muted-foreground">
+          The goal is not autonomous coding for its own sake. It is to <strong>increase execution autonomy without losing control of software delivery.</strong>
+        </p>
+      </section>
+
+      <section data-reveal>
+        <h2 class="text-xl md:text-2xl font-serif font-semibold mb-4">Stack Notes</h2>
+
+        <p class="mb-4 text-muted-foreground">
+          Guava OS is built primarily in TypeScript. Keeping orchestration and worker tooling in the same language reduces the contract surface across the system.
+        </p>
+
+        <p class="mb-4 text-muted-foreground">
+          Linear currently provides durable project state through its GraphQL API. Issues represent work, dependencies describe sequencing, comments preserve execution history, and statuses participate in workflow transitions.
+        </p>
+
+        <div class="flex flex-wrap gap-2">
+          <Badge variant="secondary">TypeScript</Badge>
+          <Badge variant="secondary">Linear GraphQL</Badge>
+          <Badge variant="secondary">OMP</Badge>
         </div>
-      </div>
-    </article>
-  </Container>
-</Layout>
+      </section>
+
+    </div>
+  </div>
+</article>
+
+</Container> </Layout>
