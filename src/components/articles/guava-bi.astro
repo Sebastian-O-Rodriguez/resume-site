@@ -16,7 +16,7 @@ import Mermaid from '../Mermaid.astro';
 
 <p> Much of my work involved connecting those systems and improving their data pipelines. That solved part of the problem, but another bottleneck remained. People still needed a better way to explore and understand the data. Guava BI grew out of that work. </p>
 
-<figure class="panel-figure"> <img class="panel-image" src="/case-studies/guava-bi/1.png" alt="Guava BI Business Pulse dashboard" loading="lazy" /> </figure>
+<figure class="panel-figure"> <img class="panel-image" src="/case-studies/guava-bi/1.png" alt="Guava BI Business Pulse dashboard" loading="lazy" /> <figcaption>Flagging stockout and overstock risk alongside sales KPIs</figcaption> </figure>
 
 <h2>Make the Data Easier to Use</h2>
 
@@ -30,21 +30,24 @@ import Mermaid from '../Mermaid.astro';
 
 <p> Guava BI separates interpretation from calculation. </p>
 
-<Mermaid
-  chart={`flowchart LR
-    A["Data"] --> B["Profile"]
-    B --> C["Interpret"]
-    C --> D["Validate"]
-    D --> E["Model"]
-    E --> F["Compute"]
-    F --> G["Interfaces"]`}
-/>
+<figure class="panel-figure">
+  <Mermaid
+    chart={`flowchart LR
+      A["Data"] --> B["Profile"]
+      B --> C["Interpret"]
+      C --> D["Validate"]
+      D --> E["Model"]
+      E --> F["Compute"]
+      F --> G["Interfaces"]`}
+  />
+  <figcaption>Tracing data from interpretation to deterministic computation</figcaption>
+</figure>
 
 <p> AI handles the ambiguous work. It interprets unfamiliar schemas, maps fields to business concepts, and determines what a user is asking. The system validates those interpretations before they reach the analytical layer. </p>
 
 <p> Once the meaning is established, code takes over. It calculates metrics, trends, and operational signals deterministically while preserving a traceable path back to the source data. </p>
 
-<figure class="panel-figure"> <img class="panel-image" src="/case-studies/guava-bi/2.png" alt="Guava BI operational dashboard" loading="lazy" /> </figure>
+<figure class="panel-figure"> <img class="panel-image" src="/case-studies/guava-bi/2.png" alt="Guava BI operational dashboard" loading="lazy" /> <figcaption>Answering a plain-language question with a computed aggregate and its evidence</figcaption> </figure>
 
 <h2>One System, Multiple Interfaces</h2>
 

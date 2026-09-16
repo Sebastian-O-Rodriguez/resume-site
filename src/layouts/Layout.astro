@@ -8,10 +8,36 @@ import Analytics from '@vercel/analytics/astro';
 
 export interface Props {
   title?: string;
+  /** Meta/OG description — defaults to the site blurb. */
+  description?: string;
+  /** OG image path, resolved against the canonical site URL. */
+  image?: string;
+  /** OG type: 'website' for pages, 'article' for case studies. */
+  type?: 'website' | 'article';
 }
 
-const { title = 'Sebastian Rodriguez' } = Astro.props;
+const {
+  title = 'Sebastian Rodriguez',
+  description = site.blurb,
+  image = '/og-default.png',
+  type = 'website',
+} = Astro.props;
 const { name, links } = site;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const ogImage = new URL(image, Astro.site).href;
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfilePage',
+  mainEntity: {
+    '@type': 'Person',
+    name: site.name,
+    description: site.blurb,
+    url: new URL('/', Astro.site).href,
+    sameAs: site.links
+      .map((link) => link.href)
+      .filter((href) => href.startsWith('http')),
+  },
+};
 ---
 
 <!doctype html>
@@ -19,8 +45,24 @@ const { name, links } = site;
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Personal resume site" />
+    <meta name="description" content={description} />
     <title>{title}</title>
+    <!-- Canonical + sharing (canonical base: docs/launch.md §Domains). -->
+    <link rel="canonical" href={canonical} />
+    <meta property="og:site_name" content="Sebastian Rodriguez" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content={type} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:alt" content="Sebastian O Rodriguez — software engineer and founder" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#FFFFFF" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#14100C" />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
     <link rel="icon" type="image/svg+xml" href="/sor-logo.svg" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <script is:inline>

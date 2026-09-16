@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <!-- OG share card — mirrors the site hero: circular headshot + serif name + blurb.
+       Palette from global.css tokens (page #FFFFFF, card #F6F1E8, border #D8CDBB, foreground #322418, muted #6B5B48). -->
+  <defs>
+    <clipPath id="avatar">
+      <circle cx="300" cy="315" r="150"/>
+    </clipPath>
+  </defs>
+  <rect width="1200" height="630" fill="#F6F1E8"/>
+  <rect x="24" y="24" width="1152" height="582" rx="18" fill="#FFFFFF" stroke="#D8CDBB" stroke-width="2"/>
+  <image href="headshot-0.JPG" x="150" y="91" width="300" height="400" preserveAspectRatio="xMidYMid slice" clip-path="url(#avatar)"/>
+  <circle cx="300" cy="315" r="150" fill="none" stroke="#D8CDBB" stroke-width="2"/>
+  <text x="520" y="255" font-family="Menlo, monospace" font-size="24" letter-spacing="5" fill="#6B5B48">SEBASTIANR.DEV</text>
+  <text x="516" y="330" font-family="Georgia, 'Times New Roman', serif" font-size="51" font-weight="600" fill="#322418">Sebastian O Rodriguez</text>
+  <text x="520" y="415" font-family="Georgia, 'Times New Roman', serif" font-size="30" fill="#6B5B48">Software engineer and founder, currently</text>
+  <text x="520" y="459" font-family="Georgia, 'Times New Roman', serif" font-size="30" fill="#6B5B48">building Guava AI. Autonomous agents,</text>
+  <text x="520" y="503" font-family="Georgia, 'Times New Roman', serif" font-size="30" fill="#6B5B48">agent harnesses, human-AI interaction.</text>
+</svg>

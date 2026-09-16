@@ -1,6 +1,6 @@
 # Sebastian O Rodriguez
 
-sebastian@guavaai.ai · github.com/Sebastian-O-Rodriguez · linkedin.com/in/sebastianorodriguez
+sebastian@guavaai.ai · sebastianr.dev · github.com/Sebastian-O-Rodriguez · linkedin.com/in/sebastianorodriguez
 
 ## Summary
 

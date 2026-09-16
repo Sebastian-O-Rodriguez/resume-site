@@ -4,7 +4,11 @@ import Container from '../components/Container.astro';
 import Badge from '../components/Badge.astro';
 import Mermaid from '../components/Mermaid.astro';
 ---
-<Layout title="Building with Guava OS"> <Container> <article class="py-12 md:py-16"> <div class="mx-auto max-w-3xl"> <header class="mb-10"> <p class="text-sm font-mono text-muted-foreground mb-3">Case study · Guava OS</p> <h1 class="text-3xl md:text-4xl font-serif font-semibold leading-tight"> A Control Plane for Agents, and the Loop I Use to Build With Them </h1> <p class="mt-4 text-base md:text-lg text-muted-foreground leading-relaxed"> Guava OS is the system I use to plan, dispatch, validate, and improve work across parallel AI coding agents. It started as a workflow I kept repeating by hand until the repetition became a system. </p> </header>
+<Layout
+  title="Building with Guava OS"
+  description="Guava OS is the system I use to plan, dispatch, validate, and improve work across parallel AI coding agents."
+  type="article"
+> <Container> <article class="py-12 md:py-16"> <div class="mx-auto max-w-3xl"> <header class="mb-10"> <p class="text-sm font-mono text-muted-foreground mb-3">Case study · Guava OS</p> <h1 class="text-3xl md:text-4xl font-serif font-semibold leading-tight"> A Control Plane for Agents, and the Loop I Use to Build With Them </h1> <p class="mt-4 text-base md:text-lg text-muted-foreground leading-relaxed"> Guava OS is the system I use to plan, dispatch, validate, and improve work across parallel AI coding agents. It started as a workflow I kept repeating by hand until the repetition became a system. </p> </header>
 
     <div class="space-y-12 text-sm md:text-base leading-relaxed text-foreground/90">
 
@@ -22,8 +26,9 @@ import Mermaid from '../components/Mermaid.astro';
         <p class="text-muted-foreground">
           Once approved, the plan becomes durable project state. The goal is simple: make the decisions before execution so the execution itself can become boring.
         </p>
-<Mermaid
-          chart={`flowchart LR
+        <figure class="m-0">
+          <Mermaid
+            chart={`flowchart LR
     A["Chat"] --> B["Plan"]
     B --> C["Decompose"]
     C --> D["Dispatch"]
@@ -32,7 +37,9 @@ import Mermaid from '../components/Mermaid.astro';
     F --> G["Review"]
     G --> H["Promote"]
     G --> A`}
-        />
+          />
+          <figcaption>Closing the loop from chat to promoted work</figcaption>
+        </figure>
       </section>
 
       <section data-reveal>
@@ -97,14 +104,17 @@ import Mermaid from '../components/Mermaid.astro';
         <p class="text-muted-foreground">
           The division is deliberate: <strong>models handle judgment and implementation; code enforces invariants.</strong>
         </p>
-<Mermaid
-          chart={`flowchart TD
+        <figure class="m-0">
+          <Mermaid
+            chart={`flowchart TD
     A["Output"] --> B["Checks"]
     B -->|Fail| C["Fix"]
     B -->|Pass| D["Review"]
     D -->|Reject| C
     D -->|Approve| E["Promote"]`}
-        />
+          />
+          <figcaption>Gating completed work through checks and review</figcaption>
+        </figure>
       </section>
 
       <section data-reveal>
@@ -145,13 +155,16 @@ import Mermaid from '../components/Mermaid.astro';
         <p class="mb-4 text-muted-foreground">
           A recurring correction can become a skill, hook, validation check, stronger task template, or better context. Instead of remembering the lesson myself, I move it into the system.
         </p>
-<Mermaid
-          chart={`flowchart LR
+        <figure class="m-0">
+          <Mermaid
+            chart={`flowchart LR
     A["Execution"] --> B["Friction"]
     B --> C["Review"]
     C --> D["Skill, hook, or rule"]
     D --> A`}
-        />
+          />
+          <figcaption>Turning recurring friction into durable rules</figcaption>
+        </figure>
         <p class="text-muted-foreground">
           Each project can therefore improve both the software being built and the system that builds the next project.
         </p>

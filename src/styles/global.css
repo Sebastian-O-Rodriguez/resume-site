@@ -236,6 +236,18 @@ h1, h2, h3, h4 {
 }
 
 /* ==================================================
+ * Figure captions — italic, centered, muted (C2).
+ * Caption copy convention: gerund phrases, no trailing period.
+ * ================================================== */
+figcaption {
+  margin-top: 0.5rem;
+  font-size: 0.8125rem;
+  font-style: italic;
+  color: var(--muted-foreground);
+  text-align: center;
+}
+
+/* ==================================================
  * Touch targets (>= 44px) (P2-07)
  * ================================================== */
 @media (max-width: 640px) {

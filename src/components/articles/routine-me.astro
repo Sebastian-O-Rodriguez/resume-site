@@ -54,6 +54,7 @@ import Mermaid from '../Mermaid.astro';
     alt="RoutineMe natural-language meal logging"
     loading="lazy"
   />
+  <figcaption>Confirming a proposed entry before it is written</figcaption>
 </figure>
 
 <h2>Where AI Stops</h2>
@@ -62,13 +63,16 @@ import Mermaid from '../Mermaid.astro';
   The most important engineering decision was deciding how much authority to give the model. I use AI to interpret ambiguous input, then hand the result to deterministic application code.
 </p>
 
-<Mermaid
-  chart={`flowchart LR
-    A["Loose input"] --> B["Interpret"]
-    B --> C["Proposal"]
-    C --> D["Confirm"]
-    D --> E["Deterministic write"]`}
-/>
+<figure class="panel-figure">
+  <Mermaid
+    chart={`flowchart LR
+      A["Loose input"] --> B["Interpret"]
+      B --> C["Proposal"]
+      C --> D["Confirm"]
+      D --> E["Deterministic write"]`}
+  />
+  <figcaption>Routing natural input through confirmation to a deterministic write</figcaption>
+</figure>
 
 <p>
   The model never gets arbitrary control over application state. I define the boundary with TypeScript and Zod schemas, then route state changes through a typed action path. The AI handles the probabilistic problem; application code handles validation and execution.

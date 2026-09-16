@@ -15,7 +15,6 @@ import Mermaid from '../Mermaid.astro';
 
 <p> We start with the people running the operation. I ask what is painful, how work moves through the business, where time or information gets lost, and what actually affects the outcome. That gives us a model of the operation before we make decisions about the technology. </p>
 
-<figure class="panel-figure"> <img class="panel-image" src="/case-studies/guava-site/1.png" alt="Guava AI public homepage" loading="lazy" /> </figure>
 
 <h2>Find the Bottleneck</h2>
 
@@ -29,7 +28,8 @@ import Mermaid from '../Mermaid.astro';
 
 <p> Once the constraint is clear, I choose the smallest intervention that produces the outcome. The answer might be an integration, deterministic automation, a better data model, AI interpretation, or an agent that can act across a workflow. </p>
 
-<Mermaid
+<figure class="panel-figure">
+  <Mermaid
   chart={`flowchart LR
     A["Outcome"] --> B["Constraint"]
     B --> C{"Need?"}
@@ -38,6 +38,8 @@ import Mermaid from '../Mermaid.astro';
     C -->|"Judgment"| F["AI"]
     C -->|"Actions"| G["Agent"]`}
 />
+  <figcaption>Routing each business constraint to the right intervention</figcaption>
+</figure>
 
 <p> I do not treat AI or autonomy as the destination. A technically ambitious solution is not inherently better. If a spreadsheet solves the problem cleanly, there is no reason to build an agent. </p>
 
