@@ -47,6 +47,21 @@ Canonical source of truth: `src/data/site.ts` (`links`) + this section.
 - Copy rule: "showcase" wording removed site-wide; card blurbs are one-line
   positioning statements.
 
+## SEO & metadata (2026-09, post-launch pass)
+
+- Canonical base: `https://sebastianr.dev` (`astro.config.mjs` `site`).
+- `Layout.astro` emits per-page title/description, canonical, OG + Twitter
+  cards, dual `theme-color`, and ProfilePage/Person JSON-LD sourced from
+  `src/data/site.ts` — no copy hardcoded in the layout.
+- Share image: `public/og-default.png` (1200×630), regenerated from
+  `assets/og-default.svg` via inkscape; default for all routes (no per-page OG).
+- Crawl: `public/robots.txt` + static `public/sitemap.xml` (3 routes — bump
+  `lastmod` when page content changes).
+- Captions: italic centered `figcaption` (global rule); only non-obvious
+  visuals carry captions — restatements were removed deliberately.
+- Resume contact line includes `sebastianr.dev`; PDF must stay 1 page after
+  any `resume.md` edit.
+
 QA gate (passed 2026-09): routing direct/refresh/back/forward, cards uniform
 320–1440 with zero clipping or overflow, modal/lightbox open-close on button/
 backdrop/Escape with body unlock, light+dark on every route, keyboard focus +
