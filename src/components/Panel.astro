@@ -277,8 +277,10 @@ const { title, subtitle, accent } = Astro.props;
   }
   /* Shared article CTA: themed solid button, consistent across all articles. */
   .panel-body :global(.button) {
-    display: inline-block;
-    margin-top: 0.5rem;
+    /* Block + fit-content + auto margins centers the CTA (top and bottom). */
+    display: block;
+    width: fit-content;
+    margin: 0.5rem auto 0;
     padding: 0.625rem 1.125rem;
     border-radius: 0.5rem;
     background: var(--primary);
