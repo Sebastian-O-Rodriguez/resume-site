@@ -41,7 +41,7 @@ Canonical source of truth: `src/data/site.ts` (`links`) + this section.
 - `/guava-os` standalone case study — orchestration-loop narrative; the
   guava-os repo stays private.
 - Resume: navbar opens the dedicated `/resume` page in a new tab — embedded
-  PDF (`/resume.pdf`) plus Open/Download actions; the old resume panel is
+  PDF (`/sr-resume.pdf`) plus Open/Download actions; the old resume panel is
   removed. PDF builds from `content/resume/resume.md` via `npm run pdf`
   (pandoc + weasyprint, `scripts/resume.css`).
 - Copy rule: "showcase" wording removed site-wide; card blurbs are one-line

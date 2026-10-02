@@ -70,7 +70,7 @@ Claim-later skills appear on the resume in the Technical Skills line with exact 
 - Generator: `content/resume/resume.md` (gfm) + `scripts/resume.css` (print) via `scripts/build-pdf.sh` (pandoc → weasyprint). Right-aligned date rows via minimal raw-HTML rows (`.rolerow > .dates`) — pandoc gfm passes raw HTML through; no `<table>` anywhere.
 - Skills as definition-style lines (`.skill-line`), not a table.
 - Reduced line-height already tuned (see CSS); adjust only if spec line budgets overshoot.
-- Output artifact: `public/resume.pdf` (1 page, letter). `public/resume.md` synced from source.
+- Output artifact: `public/sr-resume.pdf` (1 page, letter). `public/resume.md` synced from source.
 
 ## 5. Acceptance for build
 

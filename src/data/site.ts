@@ -54,7 +54,7 @@ export const site: SiteConfig = {
   photoPath: '/profile.svg',
   blurb: "I am a software engineer and founder, currently building Guava AI. I work on autonomous agents, agent harnesses, and human-AI interaction.",
   resume: {
-    download: { href: '/resume.pdf', filename: 'Sebastian-O-Rodriguez-Resume.pdf', label: 'Download Resume (PDF)' },
+    download: { href: '/sr-resume.pdf', filename: 'sr-resume.pdf', label: 'Download Resume (PDF)' },
   },
   links: [
     { label: 'Resume', href: '/resume' },
